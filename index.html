@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RQM - Estamparia de Metais | Catálogo Digital & Orçamentos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo-area">
+                <img src="img/IMG-20260508-WA0047.jpg" alt="RQM Estamparia de Metais" class="logo-img">
+            </div>
+            
+            <div class="nav-actions">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema">
+                    <span id="theme-icon">🌙</span>
+                </button>
+                
+                <a href="#solicitar-orcamento" class="cart-badge-btn">
+                    Lista de Orçamento
+                    <span class="badge" id="cart-counter">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Precisão e Robustez em <span>Estamparia de Metais</span></h1>
+        <p>A RQM desenvolve e produz peças estampadas e fornece materiais de alta qualidade. Escolha as medidas e quantidades desejadas abaixo para gerar sua solicitação rápida.</p>
+    </section>
+
+    <main class="catalog-container">
+        <h2 class="catalog-title">Nosso Portfólio / Produtos & Medidas</h2>
+        
+        <div class="product-grid" id="product-grid">
+            </div>
+    </main>
+
+    <section class="budget-section" id="solicitar-orcamento">
+        <div class="budget-container">
+            <h2>Solicitar Orçamento</h2>
+            <p class="section-subtitle">Confirme os itens selecionados nas tabelas e envie diretamente para o nosso comercial.</p>
+
+            <div class="budget-items-list">
+                <h3>Itens Selecionados:</h3>
+                <div id="selected-items-container">
+                    <p class="empty-cart-msg">Nenhum item adicionado ainda.</p>
+                </div>
+            </div>
+
+            <form class="budget-form" id="form-orcamento">
+                <div class="form-group">
+                    <label for="nome">Seu Nome ou Nome da Empresa *</label>
+                    <input type="text" id="nome" required placeholder="Ex: Metalúrgica Silva ou João Souza">
+                </div>
+                <div class="form-group">
+                    <label for="observacoes">Observações Técnicas / Quantidades Específicas</label>
+                    <textarea id="observacoes" rows="4" placeholder="Ex: Preciso de 20 barras da cantoneira de 1 polegada, cortar com 2 metros..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Enviar Pedido via WhatsApp</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 RQM Estamparia de Metais Ind. e Com. Ltda. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
