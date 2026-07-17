@@ -29,10 +29,31 @@
     </section>
 
     <main class="catalog-container">
+        
         <div id="view-grupos">
             <h2 class="catalog-title">Nosso Portfólio / Produtos & Medidas</h2>
+
+            <div class="search-filter-section">
+                <div class="search-box-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Pesquisar material (Ex: tubo, cantoneira, roldana...)" autocomplete="off">
+                </div>
+
+                <div class="filter-wrapper">
+                    <button class="btn-filter active" data-filter="todos">Todos</button>
+                    <button class="btn-filter" data-filter="perfis">Perfis e Barras</button>
+                    <button class="btn-filter" data-filter="acessorios">Acessórios</button>
+                    <button class="btn-filter" data-filter="estampados">Estampados</button>
+                </div>
+            </div>
+
             <div class="product-grid" id="product-grid">
                 </div>
+
+            <div id="noResults" class="no-results">
+                <i class="fa-solid fa-face-frown" style="font-size: 2rem; color: var(--primary); display: block; margin-bottom: 10px;"></i>
+                Nenhum grupo de material correspondente foi encontrado.
+            </div>
         </div>
 
         <div id="view-detalhes" style="display: none;">
@@ -40,6 +61,12 @@
                 <i class="fa-solid fa-arrow-left"></i> Voltar aos Grupos
             </button>
             <h2 class="catalog-title" id="detalhe-titulo-grupo">Nome do Grupo</h2>
+            
+            <div style="background-color: var(--bg-card); border-left: 4px solid var(--primary); padding: 15px; margin-bottom: 25px; border-radius: 4px; font-size: 0.9rem; color: var(--text-muted); text-align: left;">
+                <i class="fa-solid fa-circle-info" style="color: var(--primary); margin-right: 5px;"></i> 
+                <strong>Nota Comercial:</strong> Dispomos de uma linha completa de medidas sob consulta. Caso não encontre a variação exata que necessita abaixo, você pode prosseguir com a cotação padrão e descrever a medida desejada no campo de observações.
+            </div>
+
             <div id="detalhe-conteudo-categorias">
                 </div>
         </div>
@@ -59,7 +86,7 @@
         </div>
         
         <div class="wishlist-items" id="selected-items-container">
-            <p class="empty-cart-msg">Nenhum produto adicionado ainda.</p>
+            <p class="empty-cart-msg">Nenhum produto selecionado ainda.</p>
         </div>
         
         <div class="wishlist-actions">
@@ -70,10 +97,10 @@
                 </div>
                 <div class="form-group" style="display: flex; flex-direction: column; gap: 0.3rem;">
                     <label for="observacoes" style="color: #fff; font-size: 0.85rem; font-weight: bold;">Observações / Instruções de Corte</label>
-                    <textarea id="observacoes" rows="3" placeholder="Ex: Cortar tubos com 2m..." style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.95rem; resize: none; background: #fff; color: #000;"></textarea>
+                    <textarea id="observacoes" rows="3" placeholder="Ex: Preciso de cortes com 2 metros ou outras espessuras..." style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.95rem; resize: none; background: #fff; color: #000;"></textarea>
                 </div>
                 <button type="submit" class="btn-send-whatsapp">
-                    <i class="fa-brands fa-whatsapp"></i> Enviar Orçamento via WhatsApp
+                    <i class="fa-brands fa-whatsapp"></i> Enviar Solicitação via WhatsApp
                 </button>
             </form>
         </div>

@@ -2,6 +2,7 @@ const catalogoGrupos = [
     {
         idGrupo: "tubos",
         nomeGrupo: "Tubos Industriais",
+        tipoFiltro: "perfis",
         imagem: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400",
         unidadeMedia: "barra(s)",
         permitirFracao: true,
@@ -9,22 +10,22 @@ const catalogoGrupos = [
             {
                 nomeCategoria: "Tubos Redondos",
                 itens: [
-                    { idItem: "tub-red-1", medida: '1" (Parede 1,20 mm)', valor: "R$ 72,00" },
-                    { idItem: "tub-red-2", medida: '1.1/2" (Parede 1,50 mm)', valor: "R$ 98,50" }
+                    { idItem: "tub-red-1", medida: '1" (Parede 1,20 mm)' },
+                    { idItem: "tub-red-2", medida: '1.1/2" (Parede 1,50 mm)' }
                 ]
             },
             {
                 nomeCategoria: "Tubos Quadrados",
                 itens: [
-                    { idItem: "tub-qua-1", medida: "40x40 mm (Parede 1,50 mm)", valor: "R$ 115,00" },
-                    { idItem: "tub-qua-2", medida: "50x50 mm (Parede 2,00 mm)", valor: "R$ 158,00" }
+                    { idItem: "tub-qua-1", medida: "40x40 mm (Parede 1,50 mm)" },
+                    { idItem: "tub-qua-2", medida: "50x50 mm (Parede 2,00 mm)" }
                 ]
             },
             {
                 nomeCategoria: "Tubos Retangulares",
                 itens: [
-                    { idItem: "tub-ret-1", medida: "50x30 mm (Parede 1,50 mm)", valor: "R$ 128,50" },
-                    { idItem: "tub-ret-2", medida: "80x40 mm (Parede 2,00 mm)", valor: "R$ 210,00" }
+                    { idItem: "tub-ret-1", medida: "50x30 mm (Parede 1,50 mm)" },
+                    { idItem: "tub-ret-2", medida: "80x40 mm (Parede 2,00 mm)" }
                 ]
             }
         ]
@@ -32,6 +33,7 @@ const catalogoGrupos = [
     {
         idGrupo: "cantoneiras",
         nomeGrupo: "Cantoneiras",
+        tipoFiltro: "perfis",
         imagem: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=400",
         unidadeMedia: "barra(s)",
         permitirFracao: true,
@@ -39,9 +41,9 @@ const catalogoGrupos = [
             {
                 nomeCategoria: "Abas Iguais",
                 itens: [
-                    { idItem: "cant-1", medida: '1/2" x 1/8" (12,70 x 3,17 mm)', valor: "R$ 48,90" },
-                    { idItem: "cant-2", medida: '3/4" x 1/8" (19,05 x 3,17 mm)', valor: "R$ 65,50" },
-                    { idItem: "cant-3", medida: '1" x 1/8" (25,40 x 3,17 mm)', valor: "R$ 82,00" }
+                    { idItem: "cant-1", medida: '1/2" x 1/8" (12,70 x 3,17 mm)' },
+                    { idItem: "cant-2", medida: '3/4" x 1/8" (19,05 x 3,17 mm)' },
+                    { idItem: "cant-3", medida: '1" x 1/8" (25,40 x 3,17 mm)' }
                 ]
             }
         ]
@@ -49,6 +51,7 @@ const catalogoGrupos = [
     {
         idGrupo: "chato",
         nomeGrupo: "Ferro Chato",
+        tipoFiltro: "perfis",
         imagem: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=400",
         unidadeMedia: "barra(s)",
         permitirFracao: true,
@@ -56,8 +59,8 @@ const catalogoGrupos = [
             {
                 nomeCategoria: "Perfil Padrão",
                 itens: [
-                    { idItem: "chato-1", medida: '1/2" x 1/8" (12,70 x 3,17 mm)', valor: "R$ 32,10" },
-                    { idItem: "chato-2", medida: '3/4" x 3/16" (19,05 x 4,76 mm)', valor: "R$ 58,40" }
+                    { idItem: "chato-1", medida: '1/2" x 1/8" (12,70 x 3,17 mm)' },
+                    { idItem: "chato-2", medida: '3/4" x 3/16" (19,05 x 4,76 mm)' }
                 ]
             }
         ]
@@ -65,6 +68,7 @@ const catalogoGrupos = [
     {
         idGrupo: "roldanas",
         nomeGrupo: "Roldanas e Guias",
+        tipoFiltro: "acessorios",
         imagem: "https://images.unsplash.com/photo-1537462715879-360eeb61a0bc?auto=format&fit=crop&q=80&w=400",
         unidadeMedia: "unidade(s)",
         permitirFracao: false,
@@ -72,8 +76,8 @@ const catalogoGrupos = [
             {
                 nomeCategoria: "Canal em 'V'",
                 itens: [
-                    { idItem: "rold-v2", medida: '2" com Rolamento', valor: "R$ 18,50" },
-                    { idItem: "rold-v3", medida: '3" com Rolamento', valor: "R$ 29,90" }
+                    { idItem: "rold-v2", medida: '2" com Rolamento' },
+                    { idItem: "rold-v3", medida: '3" com Rolamento' }
                 ]
             }
         ]
@@ -81,6 +85,7 @@ const catalogoGrupos = [
     {
         idGrupo: "discos",
         nomeGrupo: "Discos Estampados",
+        tipoFiltro: "estampados",
         imagem: "https://images.unsplash.com/photo-1513828583835-c527ebc50322?auto=format&fit=crop&q=80&w=400",
         unidadeMedia: "unidade(s)",
         permitirFracao: false,
@@ -88,8 +93,8 @@ const catalogoGrupos = [
             {
                 nomeCategoria: "Medidas Comuns",
                 itens: [
-                    { idItem: "disc-1", medida: "Ø 100 mm (Espessura 3 mm)", valor: "R$ 12,00" },
-                    { idItem: "disc-2", medida: "Ø 150 mm (Espessura 4,75 mm)", valor: "R$ 24,50" }
+                    { idItem: "disc-1", medida: "Ø 100 mm (Espessura 3 mm)" },
+                    { idItem: "disc-2", medida: "Ø 150 mm (Espessura 4,75 mm)" }
                 ]
             }
         ]
@@ -97,6 +102,8 @@ const catalogoGrupos = [
 ];
 
 let cart = [];
+let activeFilter = 'todos';
+let activeQuery = '';
 
 const badge = document.getElementById('wishlistBadge');
 const countSpan = document.getElementById('wishlistCount');
@@ -111,25 +118,28 @@ function initTheme() {
     
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
-        themeIcon.innerText = '☀️';
+        if (themeIcon) themeIcon.innerText = '☀️';
     } else {
-        themeIcon.innerText = '🌙';
+        if (themeIcon) themeIcon.innerText = '🌙';
     }
 
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        themeIcon.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    });
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (themeIcon) {
+                themeIcon.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            }
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+    }
 }
 
-// 1. RENDERIZA APENAS OS CARDS DE GRUPO DO GRID PRINCIPAL
 function renderCatalog() {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
 
     grid.innerHTML = catalogoGrupos.map(grupo => `
-        <div class="product-card" onclick="verDetalhesGrupo('${grupo.idGrupo}')">
+        <div class="product-card" data-category="${grupo.tipoFiltro}" data-search-term="${grupo.nomeGrupo}" onclick="verDetalhesGrupo('${grupo.idGrupo}')">
             <img src="${grupo.imagem}" alt="${grupo.nomeGrupo}" class="product-img">
             <div class="product-card-body">
                 <h3>${grupo.nomeGrupo} <i class="fa-solid fa-arrow-right" style="color: var(--primary); font-size:0.95rem;"></i></h3>
@@ -138,22 +148,18 @@ function renderCatalog() {
     `).join('');
 }
 
-// 2. SISTEMA DE ENTRAR NA TELA DE DETALHES DO GRUPO (NAVEGAÇÃO INTERNA)
 window.verDetalhesGrupo = function(idGrupo) {
     const grupo = catalogoGrupos.find(g => g.idGrupo === idGrupo);
     if (!grupo) return;
 
     document.getElementById('detalhe-titulo-grupo').innerText = grupo.nomeGrupo;
-    
     const containerCategorias = document.getElementById('detalhe-conteudo-categorias');
     
     containerCategorias.innerHTML = grupo.categorias.map(cat => {
         const htmlItens = cat.itens.map(item => {
-            const step = grupo.permitirFracao ? "0.5" : "1";
-            const min = grupo.permitirFracao ? "0.5" : "1";
-            const placeholder = grupo.permitirFracao ? "Ex: 1.5" : "Ex: 2";
+            const step = grupo.permitirFracao ? 0.5 : 1;
+            const valorInicial = grupo.permitirFracao ? "1.0" : "1";
 
-            // RESOLUÇÃO DO BUG: Convertendo o objeto para string JSON segura, eliminando a quebra de aspas
             const itemDadosString = btoa(unescape(encodeURIComponent(JSON.stringify({
                 grupo: grupo.nomeGrupo,
                 categoria: cat.nomeCategoria,
@@ -165,13 +171,16 @@ window.verDetalhesGrupo = function(idGrupo) {
             return `
                 <tr>
                     <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); font-size: 0.95rem;">${item.medida}</td>
-                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; font-weight: bold;">${item.valor}</td>
-                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); width: 120px;">
-                        <input type="number" id="qtd-${item.idItem}" step="${step}" min="${min}" placeholder="${placeholder}" style="padding: 6px; border-radius: 4px; border: 1px solid var(--border-color); width: 100%; font-size: 0.9rem; background: var(--bg-card); color: var(--text-main);">
+                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); width: 160px;">
+                        <div class="quantity-control">
+                            <button class="btn-qty" onclick="alterarQtd('${item.idItem}', -${step})">-</button>
+                            <input type="number" id="qtd-${item.idItem}" step="${step}" min="${step}" value="${valorInicial}" class="input-qty" readonly>
+                            <button class="btn-qty" onclick="alterarQtd('${item.idItem}', ${step})">+</button>
+                        </div>
                     </td>
-                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); text-align: right;">
-                        <button id="btn-add-${item.idItem}" class="btn-add" style="padding: 6px 14px; font-size: 0.85rem;" onclick="processarInclusao('${itemDadosString}')">
-                            + Incluir
+                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); text-align: right; width: 150px;">
+                        <button id="btn-add-${item.idItem}" class="btn-add" onclick="processarInclusao('${itemDadosString}')">
+                            + Solicitar
                         </button>
                     </td>
                 </tr>
@@ -179,14 +188,13 @@ window.verDetalhesGrupo = function(idGrupo) {
         }).join('');
 
         return `
-            <div style="margin-bottom: 2.5rem;">
+            <div style="margin-bottom: 2.5rem; animation: fadeIn 0.4s ease;">
                 <h4 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 0.8rem; text-transform: uppercase; text-align: left; font-weight:700;">➔ ${cat.nomeCategoria}</h4>
                 <div style="width: 100%; overflow-x: auto; background-color: var(--bg-card); border-radius: 8px; border: 2px solid var(--border-color);">
                     <table style="width: 100%; border-collapse: collapse; text-align: left;">
                         <thead>
                             <tr style="background-color: var(--border-color); color: var(--text-main); font-size: 0.85rem;">
-                                <th style="padding: 10px;">Medida</th>
-                                <th style="padding: 10px;">Ref. Valor</th>
+                                <th style="padding: 10px;">Medida Padrão</th>
                                 <th style="padding: 10px;">Qtd (${grupo.unidadeMedia})</th>
                                 <th style="padding: 10px; text-align: right;">Ação</th>
                             </tr>
@@ -200,10 +208,22 @@ window.verDetalhesGrupo = function(idGrupo) {
         `;
     }).join('');
 
-    // Efeito de troca de telas
     document.getElementById('view-grupos').style.display = 'none';
     document.getElementById('view-detalhes').style.display = 'block';
-    window.scrollTo({ top: 300, behavior: 'smooth' });
+    window.scrollTo({ top: 250, behavior: 'smooth' });
+};
+
+window.alterarQtd = function(idItem, delta) {
+    const input = document.getElementById(`qtd-${idItem}`);
+    if (!input) return;
+    
+    let valAtual = parseFloat(input.value) || 0;
+    let min = parseFloat(input.getAttribute('min')) || 1;
+    let novoVal = valAtual + delta;
+    
+    if (novoVal < min) novoVal = min;
+    
+    input.value = (novoVal % 1 === 0) ? novoVal.toFixed(0) : novoVal.toFixed(1);
 };
 
 window.voltarParaGrupos = function() {
@@ -211,7 +231,6 @@ window.voltarParaGrupos = function() {
     document.getElementById('view-grupos').style.display = 'block';
 };
 
-// 3. CAPTURA E INCLUSÃO TRATADA (FIM DOS CONFLITOS DE ASPAS)
 window.processarInclusao = function(encodedData) {
     const item = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
     const inputQtd = document.getElementById(`qtd-${item.idItem}`);
@@ -221,7 +240,7 @@ window.processarInclusao = function(encodedData) {
     const qtdDigitada = parseFloat(inputQtd.value);
 
     if (isNaN(qtdDigitada) || qtdDigitada <= 0) {
-        alert("Por favor, introduza uma quantidade válida.");
+        alert("Por favor, selecione uma quantidade válida.");
         return;
     }
 
@@ -239,17 +258,15 @@ window.processarInclusao = function(encodedData) {
         });
     }
 
-    // Feedback visual de sucesso no botão
     if (btn) {
-        btn.innerHTML = '<i class="fa-solid fa-check"></i> Incluído';
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Adicionado';
         btn.classList.add('included');
         setTimeout(() => {
-            btn.innerHTML = '+ Incluir';
+            btn.innerHTML = '+ Solicitar';
             btn.classList.remove('included');
         }, 1000);
     }
 
-    inputQtd.value = ""; 
     updateOrderUI();
 };
 
@@ -265,12 +282,10 @@ function updateOrderUI() {
     if (totalItems > 0) {
         if (badge) {
             badge.classList.add('show');
-            badge.style.transform = 'scale(1)';
         }
     } else {
         if (badge) {
             badge.classList.remove('show');
-            badge.style.transform = 'scale(0)';
         }
         closeWishlistModal();
     }
@@ -279,14 +294,14 @@ function updateOrderUI() {
     if (!container) return;
 
     if (cart.length === 0) {
-        container.innerHTML = `<p class="empty-cart-msg">Nenhum produto adicionado ainda.</p>`;
+        container.innerHTML = `<p class="empty-cart-msg">Nenhum produto selecionado ainda.</p>`;
         return;
     }
 
     container.innerHTML = cart.map(item => `
-        <div class="wishlist-item-row">
+        <div class="wishlist-item-row" style="animation: fadeIn 0.3s ease;">
             <div>
-                <span style="display: block; font-size: 0.75rem; color: #9ca3af;">${item.grupo} ➔ ${item.categoria}</span>
+                <span style="display: block; font-size: 0.75rem; color: #94a3b8;">${item.grupo} ➔ ${item.categoria}</span>
                 <strong style="font-size: 0.9rem; color: #fff;">${item.medida}</strong>
                 <div style="margin-top: 4px; font-size: 0.85rem; color: var(--primary); font-weight: bold;">
                     Qtd: ${item.quantidade} ${item.unidade}
@@ -300,19 +315,78 @@ function updateOrderUI() {
 }
 
 function openWishlistModal() {
-    modal.classList.add('open');
-    overlay.classList.add('show');
+    if (modal) modal.classList.add('open');
+    if (overlay) overlay.classList.add('show');
 }
 function closeWishlistModal() {
-    modal.classList.remove('open');
-    overlay.classList.remove('show');
+    if (modal) modal.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
 }
 
-badge.addEventListener('click', openWishlistModal);
-closeModalBtn.addEventListener('click', closeWishlistModal);
-overlay.addEventListener('click', closeWishlistModal);
+function normalizeText(text) {
+    return text.toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") 
+        .replace(/[^a-z0-9 ]/g, " ")     
+        .replace(/\s+/g, " ")            
+        .trim();
+}
 
-// ENVIO WHATSAPP
+function applyFiltersAndSearch() {
+    const catalogCards = document.querySelectorAll('.product-card');
+    const noResults = document.getElementById('noResults');
+    let visibleCount = 0;
+    const normalizedQuery = normalizeText(activeQuery);
+
+    catalogCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        const cardTitle = card.getAttribute('data-search-term') || "";
+        const combinedText = normalizeText(cardTitle);
+
+        const matchesFilter = (activeFilter === 'todos' || category === activeFilter);
+        const matchesSearch = combinedText.includes(normalizedQuery);
+
+        if (matchesFilter && matchesSearch) {
+            card.classList.remove('hidden');
+            visibleCount++;
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+
+    if (noResults) {
+        noResults.style.display = (visibleCount === 0) ? 'block' : 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    initTheme();
+    renderCatalog();
+
+    if (badge) badge.addEventListener('click', openWishlistModal);
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeWishlistModal);
+    if (overlay) overlay.addEventListener('click', closeWishlistModal);
+
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.btn-filter');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            activeQuery = e.target.value;
+            applyFiltersAndSearch();
+        });
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(b => b.classList.remove('active'));
+            button.classList.add('active');
+            activeFilter = button.getAttribute('data-filter');
+            applyFiltersAndSearch();
+        });
+    });
+});
+
 const form = document.getElementById('form-orcamento');
 if (form) {
     form.addEventListener('submit', function(e) {
@@ -328,14 +402,14 @@ if (form) {
             itensTexto += `\n- *${item.grupo}* (${item.categoria}) \n  Medida: _${item.medida}_ | *Qtd:* ${item.quantidade} ${item.unidade}`;
         });
 
-        const message = `Olá, gostaria de solicitar um orçamento técnico!
+        const message = `Olá, gostaria de solicitar uma cotação técnica de materiais!
 
 *Identificação do Solicitante:*
 👤 *Nome / Empresa:* ${nome}
 
-*Lista de Materiais de Interesse:* ${itensTexto}
+*Lista de Itens para Cotação:* ${itensTexto}
 
-*Observações Adicionais / Cortes:*
+*Observações Adicionais / Instruções de Corte:*
 ${obs}
 
 ---
@@ -344,8 +418,3 @@ _Solicitação gerada via Catálogo Digital RQM_`;
         window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(message)}`, '_blank');
     });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    initTheme();
-    renderCatalog();
-});
