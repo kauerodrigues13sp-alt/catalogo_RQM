@@ -1,27 +1,17 @@
-/* ==========================================================================
-   1. VARIÁVEIS DE DESIGN (Modo Claro como Padrão - Máximo Contraste)
-   ========================================================================== */
 :root {
-    --primary: #f59e0b;      /* Laranja/Amarelo Industrial para Destaques */
+    --primary: #f59e0b;      
     --primary-hover: #d97706;
-    
-    /* Cores do Modo Claro (Padrão) */
-    --bg-main: #f9fafb;      /* Fundo ultra claro, limpo e profissional */
-    --bg-card: #ffffff;      /* Branco puro para destacar os produtos */
-    --bg-input: #ffffff;
-    --text-main: #111827;    /* Cinza quase preto (Contraste máximo de leitura) */
-    --text-muted: #4b5563;   /* Cinza escuro legível para especificações */
-    --border-color: #e5e7eb; /* Divisores suaves e limpos */
+    --bg-main: #f9fafb;      
+    --bg-card: #ffffff;      
+    --text-main: #111827;    
+    --text-muted: #4b5563;   
+    --border-color: #e5e7eb; 
     --header-bg: rgba(255, 255, 255, 0.98);
 }
 
-/* ==========================================================================
-   1b. VARIÁVEIS DO MODO ESCURO (Ativado via botão no cabeçalho)
-   ========================================================================== */
 body.dark-mode {
     --bg-main: #111827;      
     --bg-card: #1f2937;      
-    --bg-input: #111827;
     --text-main: #f9fafb;    
     --text-muted: #9ca3af;   
     --border-color: #374151; 
@@ -43,9 +33,6 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ==========================================================================
-   2. HEADER & NAVEGAÇÃO
-   ========================================================================== */
 header {
     background-color: var(--header-bg);
     border-bottom: 2px solid var(--border-color);
@@ -53,7 +40,6 @@ header {
     top: 0;
     z-index: 100;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-container {
@@ -63,11 +49,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; 
-    gap: 1rem;
 }
 
-/* Destaque para a Logomarca RQM */
 .logo-area {
     display: flex;
     align-items: center;
@@ -76,24 +59,12 @@ header {
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); 
     border: 2px solid var(--primary); 
-    transition: transform 0.2s ease;
-}
-
-.logo-area:hover {
-    transform: scale(1.03); 
 }
 
 .logo-img {
     height: 85px; 
     width: auto;
-    display: block;
     object-fit: contain;
-}
-
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 }
 
 .theme-toggle-btn {
@@ -108,50 +79,10 @@ header {
     align-items: center;
     justify-content: center;
     font-size: 1.3rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s ease;
 }
 
-.theme-toggle-btn:hover {
-    transform: scale(1.05);
-    border-color: var(--primary);
-}
-
-.cart-badge-btn {
-    background-color: var(--primary);
-    color: #111827;
-    text-decoration: none;
-    padding: 0.8rem 1.4rem;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 3px 8px rgba(245, 158, 11, 0.2);
-    transition: all 0.2s ease;
-}
-
-.cart-badge-btn:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 12px rgba(245, 158, 11, 0.3);
-}
-
-.badge {
-    background-color: #111827;
-    color: #fff;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 0.85rem;
-}
-
-/* ==========================================================================
-   3. HERO SECTION
-   ========================================================================== */
 .hero {
-    padding: 5rem 1.5rem;
+    padding: 4rem 1.5rem;
     text-align: center;
     background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-main) 100%);
     border-bottom: 1px solid var(--border-color);
@@ -161,15 +92,10 @@ header {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
-    color: var(--text-main);
-    line-height: 1.2;
 }
 
 .hero h1 span {
     color: var(--primary);
-    border-bottom: 3px solid var(--primary);
-    padding-bottom: 3px;
-    display: inline-block; 
 }
 
 .hero p {
@@ -177,16 +103,12 @@ header {
     max-width: 750px;
     margin: 0 auto;
     font-size: 1.2rem;
-    line-height: 1.8;
 }
 
-/* ==========================================================================
-   4. VITRINE / GRID DE PRODUTOS (Largura adaptada para tabelas)
-   ========================================================================== */
 .catalog-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 1.5rem;
+    padding: 3rem 1.5rem;
 }
 
 .catalog-title {
@@ -198,7 +120,7 @@ header {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); /* Excelente largura para tabelas sem esmagar texto */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
     gap: 2rem;
 }
 
@@ -208,45 +130,51 @@ header {
     overflow: hidden;
     border: 2px solid var(--border-color);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    display: flex;
-    flex-direction: column; 
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
     border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
 
 .product-img {
     width: 100%;
-    height: 220px;
+    height: 200px;
     object-fit: cover;
     border-bottom: 1px solid var(--border-color);
 }
 
-.product-info {
+.product-card-body {
     padding: 1.5rem;
+    text-align: center;
+}
+
+.product-card-body h3 {
+    font-size: 1.25rem;
     display: flex;
-    flex-direction: column;
-    flex-grow: 1; 
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
-.product-info h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
+.btn-voltar {
+    background-color: transparent;
+    border: 2px solid var(--text-main);
+    color: var(--text-main);
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
     font-weight: 700;
+    margin-bottom: 2rem;
+    transition: all 0.2s;
 }
 
-.tech-spec {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 0.8rem;
-    line-height: 1.6;
-    flex-grow: 1; 
+.btn-voltar:hover {
+    background-color: var(--text-main);
+    color: var(--bg-main);
 }
 
 .btn-add {
@@ -265,187 +193,160 @@ header {
     color: #111827;
 }
 
-/* ==========================================================================
-   5. ÁREA DE ORÇAMENTO (Formulário)
-   ========================================================================== */
-.budget-section {
-    background-color: var(--bg-card);
-    border-top: 2px solid var(--border-color);
-    padding: 4rem 1.5rem;
+.btn-add.included {
+    background-color: #16a34a !important;
+    border-color: #16a34a !important;
+    color: white !important;
 }
 
-.budget-container {
-    max-width: 800px;
-    margin: 0 auto;
+/* WIDGET DA SACOLA E GAVETA */
+.wishlist-badge {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--primary);
+    color: #111827;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
+    z-index: 990;
+    transition: all 0.3s ease;
+    transform: scale(0); 
 }
 
-.section-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-muted); 
-    margin-bottom: 2.5rem;
+.wishlist-badge.show {
+    transform: scale(1);
 }
 
-.budget-items-list {
-    background-color: var(--bg-main);
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 2.5rem;
-    border: 2px solid var(--border-color);
+.badge-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #dc2626;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 10px;
+    min-width: 24px;
+    text-align: center;
 }
 
-.budget-items-list h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+.wishlist-modal {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 420px;
+    height: 100vh;
+    background: rgba(17, 24, 39, 0.98);
+    backdrop-filter: blur(15px);
+    border-left: 3px solid var(--primary);
+    z-index: 1002;
+    transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
 }
 
-.empty-cart-msg {
-    color: var(--text-muted); 
-    padding: 0.5rem 0;
+.wishlist-modal.open {
+    right: 0;
 }
 
-.budget-item-row {
+.wishlist-modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid var(--border-color);
-    gap: 1rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+    padding-bottom: 15px;
+    color: #fff;
 }
 
-.budget-item-row:last-child {
-    border-bottom: none;
+.close-modal {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.wishlist-items {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.wishlist-item-row {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
 }
 
 .btn-remove {
     background: none;
     border: none;
-    color: #dc2626;
+    color: #f87171;
     cursor: pointer;
-    font-weight: 700;
-    font-size: 0.95rem;
-    white-space: nowrap; 
-}
-
-.btn-remove:hover {
-    text-decoration: underline;
-}
-
-.budget-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.8rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-}
-
-.form-group label {
-    font-weight: 700;
-    font-size: 1rem;
-}
-
-.form-group input, .form-group textarea {
-    background-color: var(--bg-input);
-    border: 2px solid var(--border-color);
-    color: var(--text-main);
-    padding: 1rem;
-    border-radius: 8px;
-    font-size: 1.05rem;
-    width: 100%;
-    transition: border-color 0.2s ease;
-}
-
-.form-group input:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
-}
-
-.btn-submit {
-    background-color: var(--primary);
-    color: #111827;
-    border: none;
-    padding: 1.2rem;
     font-size: 1.2rem;
-    font-weight: 800;
-    border-radius: 8px;
+}
+
+.btn-send-whatsapp {
+    background-color: #16a34a;
+    color: #ffffff;
+    border: none;
+    font-weight: bold;
+    padding: 14px;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
-    transition: all 0.2s ease;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
-.btn-submit:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(245, 158, 11, 0.3);
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 995;
+    display: none;
 }
 
-/* ==========================================================================
-   6. FOOTER
-   ========================================================================== */
+.modal-overlay.show {
+    display: block;
+}
+
+.empty-cart-msg {
+    color: #9ca3af;
+    text-align: center;
+    padding: 2rem 0;
+}
+
 footer {
     text-align: center;
     padding: 3rem 1.5rem;
     border-top: 2px solid var(--border-color);
     color: var(--text-muted);
-    font-size: 1rem;
     background-color: var(--bg-card);
+    margin-top: 4rem;
 }
 
-/* ==========================================================================
-   7. RESPONSIVIDADE (Celulares e Tablets)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .nav-container {
-        flex-direction: column; 
-        justify-content: center;
-        text-align: center;
-        padding: 1.2rem 1rem;
-    }
-
-    .logo-area {
-        margin-bottom: 0.5rem;
-        justify-content: center;
-        width: 100%; 
-    }
-
-    .logo-img {
-        height: 95px; 
-    }
-
-    .nav-actions {
-        width: 100%;
-        justify-content: center; 
-        gap: 0.8rem;
-    }
-
-    .cart-badge-btn {
-        flex-grow: 1; 
-        justify-content: center;
-    }
-
-    .hero {
-        padding: 4rem 1rem;
-    }
-
-    .hero h1 {
-        font-size: 2rem; 
-    }
-
-    .catalog-container {
-        padding: 3rem 1rem;
-    }
-
-    .product-grid {
-        grid-template-columns: 1fr; 
-        gap: 1.8rem;
-    }
-
-    .budget-section {
-        padding: 3rem 1rem;
-    }
+@media (max-width: 480px) {
+    .wishlist-modal { width: 100%; }
 }

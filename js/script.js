@@ -1,69 +1,109 @@
-// Catálogo Real de Materiais da RQM com Grupos, Medidas e Valores fictícios para teste
-const produtos = [
+const catalogoGrupos = [
     {
-        id: 1,
-        titulo: "Cantoneiras de Ferro e Aço",
-        especificacoes: "Abas iguais e desiguais em barras de 6 metros ou cortadas sob medida.",
-        imagem: "http://googleusercontent.com/image_collection/image_retrieval/9220372035319089467",
-        variacoes: [
-            { idVariacao: "cant-1", medida: "1/2\" x 1/8\" (12,70 x 3,17 mm)", valor: "R$ 48,90 / barra" },
-            { idVariacao: "cant-2", medida: "3/4\" x 1/8\" (19,05 x 3,17 mm)", valor: "R$ 65,50 / barra" },
-            { idVariacao: "cant-3", medida: "1\" x 1/8\" (25,40 x 3,17 mm)", valor: "R$ 82,00 / barra" },
-            { idVariacao: "cant-4", medida: "1.1/2\" x 3/16\" (38,10 x 4,76 mm)", valor: "R$ 154,30 / barra" }
+        idGrupo: "tubos",
+        nomeGrupo: "Tubos Industriais",
+        imagem: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400",
+        unidadeMedia: "barra(s)",
+        permitirFracao: true,
+        categorias: [
+            {
+                nomeCategoria: "Tubos Redondos",
+                itens: [
+                    { idItem: "tub-red-1", medida: '1" (Parede 1,20 mm)', valor: "R$ 72,00" },
+                    { idItem: "tub-red-2", medida: '1.1/2" (Parede 1,50 mm)', valor: "R$ 98,50" }
+                ]
+            },
+            {
+                nomeCategoria: "Tubos Quadrados",
+                itens: [
+                    { idItem: "tub-qua-1", medida: "40x40 mm (Parede 1,50 mm)", valor: "R$ 115,00" },
+                    { idItem: "tub-qua-2", medida: "50x50 mm (Parede 2,00 mm)", valor: "R$ 158,00" }
+                ]
+            },
+            {
+                nomeCategoria: "Tubos Retangulares",
+                itens: [
+                    { idItem: "tub-ret-1", medida: "50x30 mm (Parede 1,50 mm)", valor: "R$ 128,50" },
+                    { idItem: "tub-ret-2", medida: "80x40 mm (Parede 2,00 mm)", valor: "R$ 210,00" }
+                ]
+            }
         ]
     },
     {
-        id: 2,
-        titulo: "Ferro Chato (Barras)",
-        especificacoes: "Barras chatas de alta resistência para serralheria, estruturas e usinagem.",
-        imagem: "http://googleusercontent.com/image_collection/image_retrieval/13195216048069167158",
-        variacoes: [
-            { idVariacao: "chato-1", medida: "1/2\" x 1/8\" (12,70 x 3,17 mm)", valor: "R$ 32,10 / barra" },
-            { idVariacao: "chato-2", medida: "3/4\" x 3/16\" (19,05 x 4,76 mm)", valor: "R$ 58,40 / barra" },
-            { idVariacao: "chato-3", medida: "1\" x 1/4\" (25,40 x 6,35 mm)", valor: "R$ 94,80 / barra" }
+        idGrupo: "cantoneiras",
+        nomeGrupo: "Cantoneiras",
+        imagem: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=400",
+        unidadeMedia: "barra(s)",
+        permitirFracao: true,
+        categorias: [
+            {
+                nomeCategoria: "Abas Iguais",
+                itens: [
+                    { idItem: "cant-1", medida: '1/2" x 1/8" (12,70 x 3,17 mm)', valor: "R$ 48,90" },
+                    { idItem: "cant-2", medida: '3/4" x 1/8" (19,05 x 3,17 mm)', valor: "R$ 65,50" },
+                    { idItem: "cant-3", medida: '1" x 1/8" (25,40 x 3,17 mm)', valor: "R$ 82,00" }
+                ]
+            }
         ]
     },
     {
-        id: 3,
-        titulo: "Tubos Industriais (Quadrados, Redondos e Retangulares)",
-        especificacoes: "Tubos com costura, alta precisão dimensional e excelente acabamento para pintura ou zincagem.",
-        imagem: "http://googleusercontent.com/image_collection/image_retrieval/2454670599483014625",
-        variacoes: [
-            { idVariacao: "tubo-1", medida: "Tubo Redondo 1\" (Parede 1,20 mm)", valor: "R$ 72,00 / barra" },
-            { idVariacao: "tubo-2", medida: "Tubo Quadrado 40x40 mm (Parede 1,50 mm)", valor: "R$ 115,00 / barra" },
-            { idVariacao: "tubo-3", medida: "Tubo Retangular 50x30 mm (Parede 1,50 mm)", valor: "R$ 128,50 / barra" }
+        idGrupo: "chato",
+        nomeGrupo: "Ferro Chato",
+        imagem: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=400",
+        unidadeMedia: "barra(s)",
+        permitirFracao: true,
+        categorias: [
+            {
+                nomeCategoria: "Perfil Padrão",
+                itens: [
+                    { idItem: "chato-1", medida: '1/2" x 1/8" (12,70 x 3,17 mm)', valor: "R$ 32,10" },
+                    { idItem: "chato-2", medida: '3/4" x 3/16" (19,05 x 4,76 mm)', valor: "R$ 58,40" }
+                ]
+            }
         ]
     },
     {
-        id: 4,
-        titulo: "Roldanas de Aço e Guias",
-        especificacoes: "Roldanas usinadas de alta precisão para trilhos, portões e maquinários pesados.",
-        imagem: "http://googleusercontent.com/image_collection/image_retrieval/18244835111934123243",
-        variacoes: [
-            { idVariacao: "rold-1", medida: "Roldana Canal 'V' de 2\" com rolamento", valor: "R$ 18,50 / un" },
-            { idVariacao: "rold-2", medida: "Roldana Canal 'V' de 3\" com rolamento", valor: "R$ 29,90 / un" },
-            { idVariacao: "rold-3", medida: "Roldana Canal U 3\" dupla", valor: "R$ 54,00 / un" }
+        idGrupo: "roldanas",
+        nomeGrupo: "Roldanas e Guias",
+        imagem: "https://images.unsplash.com/photo-1537462715879-360eeb61a0bc?auto=format&fit=crop&q=80&w=400",
+        unidadeMedia: "unidade(s)",
+        permitirFracao: false,
+        categorias: [
+            {
+                nomeCategoria: "Canal em 'V'",
+                itens: [
+                    { idItem: "rold-v2", medida: '2" com Rolamento', valor: "R$ 18,50" },
+                    { idItem: "rold-v3", medida: '3" com Rolamento', valor: "R$ 29,90" }
+                ]
+            }
         ]
     },
     {
-        id: 5,
-        titulo: "Discos e Flanges Estampados",
-        especificacoes: "Chapas circulares e discos de aço carbono ideais para tampas, bases e calandragem.",
-        imagem: "http://googleusercontent.com/image_collection/image_retrieval/11355019144734550513",
-        variacoes: [
-            { idVariacao: "disc-1", medida: "Disco Diâmetro 100 mm (Espessura 3 mm)", valor: "R$ 12,00 / un" },
-            { idVariacao: "disc-2", medida: "Disco Diâmetro 150 mm (Espessura 4,75 mm)", valor: "R$ 24,50 / un" },
-            { idVariacao: "disc-3", medida: "Disco Diâmetro 200 mm (Espessura 6,35 mm)", valor: "R$ 41,00 / un" }
+        idGrupo: "discos",
+        nomeGrupo: "Discos Estampados",
+        imagem: "https://images.unsplash.com/photo-1513828583835-c527ebc50322?auto=format&fit=crop&q=80&w=400",
+        unidadeMedia: "unidade(s)",
+        permitirFracao: false,
+        categorias: [
+            {
+                nomeCategoria: "Medidas Comuns",
+                itens: [
+                    { idItem: "disc-1", medida: "Ø 100 mm (Espessura 3 mm)", valor: "R$ 12,00" },
+                    { idItem: "disc-2", medida: "Ø 150 mm (Espessura 4,75 mm)", valor: "R$ 24,50" }
+                ]
+            }
         ]
     }
 ];
 
-// Lista temporária de orçamentos (Carrinho)
 let cart = [];
 
-// ==========================================================================
-// CONTROLE DO TEMA (CLARO / ESCURO)
-// ==========================================================================
+const badge = document.getElementById('wishlistBadge');
+const countSpan = document.getElementById('wishlistCount');
+const modal = document.getElementById('wishlistModal');
+const overlay = document.getElementById('modalOverlay');
+const closeModalBtn = document.getElementById('closeModal');
+
 function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
@@ -78,146 +118,234 @@ function initTheme() {
 
     themeToggleBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-        if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('theme', 'dark');
-            themeIcon.innerText = '☀️';
-        } else {
-            localStorage.setItem('theme', 'light');
-            themeIcon.innerText = '🌙';
-        }
+        themeIcon.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     });
 }
 
-// ==========================================================================
-// RENDERIZAR INTERATIVAMENTE OS CARDS E TABELAS
-// ==========================================================================
-function renderProdutos() {
+// 1. RENDERIZA APENAS OS CARDS DE GRUPO DO GRID PRINCIPAL
+function renderCatalog() {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
 
-    grid.innerHTML = produtos.map(prod => {
-        // Gera cada linha da tabela interna do card
-        const linhasTabela = prod.variacoes.map(v => `
-            <tr>
-                <td style="padding: 10px; border-bottom: 1px solid var(--border-color); font-size: 0.95rem;">${v.medida}</td>
-                <td style="padding: 10px; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; font-weight: bold; color: var(--text-main);">${v.valor}</td>
-                <td style="padding: 10px; border-bottom: 1px solid var(--border-color); text-align: right;">
-                    <button class="btn-add" style="padding: 6px 12px; font-size: 0.85rem;" onclick="addToCart('${prod.titulo}', '${v.medida}', '${v.valor}', '${v.idVariacao}')">
-                        + Orçamento
-                    </button>
-                </td>
-            </tr>
-        `).join('');
-
-        return `
-            <div class="product-card">
-                <img src="${prod.imagem}" alt="${prod.titulo}" class="product-img">
-                <div class="product-info">
-                    <h3 style="margin-bottom: 0.5rem;">${prod.titulo}</h3>
-                    <p class="tech-spec" style="margin-bottom: 1rem; font-size: 0.9rem; border-top: none; padding-top: 0;">${prod.especificacoes}</p>
-                    
-                    <div style="width: 100%; overflow-x: auto; background-color: var(--bg-main); border-radius: 8px; border: 1px solid var(--border-color); margin-top: auto;">
-                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                            <thead>
-                                <tr style="background-color: var(--border-color); color: var(--text-main);">
-                                    <th style="padding: 10px; font-size: 0.85rem; font-weight: 800;">Medida</th>
-                                    <th style="padding: 10px; font-size: 0.85rem; font-weight: 800;">Preço Unitário</th>
-                                    <th style="padding: 10px; font-size: 0.85rem; font-weight: 800; text-align: right;">Ação</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${linhasTabela}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    grid.innerHTML = catalogoGrupos.map(grupo => `
+        <div class="product-card" onclick="verDetalhesGrupo('${grupo.idGrupo}')">
+            <img src="${grupo.imagem}" alt="${grupo.nomeGrupo}" class="product-img">
+            <div class="product-card-body">
+                <h3>${grupo.nomeGrupo} <i class="fa-solid fa-arrow-right" style="color: var(--primary); font-size:0.95rem;"></i></h3>
             </div>
-        `;
-    }).join('');
-}
-
-// ==========================================================================
-// GERENCIAR LISTA DE ORÇAMENTO
-// ==========================================================================
-window.addToCart = function(grupo, medida, valor, idVariacao) {
-    if (cart.some(item => item.idVariacao === idVariacao)) {
-        alert("Esta medida já foi adicionada à sua lista de orçamento!");
-        return;
-    }
-
-    cart.push({ grupo, medida, valor, idVariacao });
-    updateCartUI();
-};
-
-window.removeFromCart = function(idVariacao) {
-    cart = cart.filter(item => item.idVariacao !== idVariacao);
-    updateCartUI();
-};
-
-function updateCartUI() {
-    const counter = document.getElementById('cart-counter');
-    if (counter) counter.innerText = cart.length;
-    
-    const container = document.getElementById('selected-items-container');
-    if (!container) return;
-
-    if (cart.length === 0) {
-        container.innerHTML = `<p class="empty-cart-msg">Nenhum item adicionado ainda.</p>`;
-        return;
-    }
-
-    container.innerHTML = cart.map(item => `
-        <div class="budget-item-row" style="padding: 12px 0;">
-            <div>
-                <span style="display: block; font-size: 0.9rem; color: var(--text-muted);">${item.grupo}</span>
-                <strong>${item.medida}</strong>
-            </div>
-            <button class="btn-remove" onclick="removeFromCart('${item.idVariacao}')">Remover</button>
         </div>
     `).join('');
 }
 
-// ==========================================================================
-// DISPARO DE MENSAGEM VIA WHATSAPP (INTEGRAÇÃO COM O SEU SISTEMA COLLINES)
-// ==========================================================================
+// 2. SISTEMA DE ENTRAR NA TELA DE DETALHES DO GRUPO (NAVEGAÇÃO INTERNA)
+window.verDetalhesGrupo = function(idGrupo) {
+    const grupo = catalogoGrupos.find(g => g.idGrupo === idGrupo);
+    if (!grupo) return;
+
+    document.getElementById('detalhe-titulo-grupo').innerText = grupo.nomeGrupo;
+    
+    const containerCategorias = document.getElementById('detalhe-conteudo-categorias');
+    
+    containerCategorias.innerHTML = grupo.categorias.map(cat => {
+        const htmlItens = cat.itens.map(item => {
+            const step = grupo.permitirFracao ? "0.5" : "1";
+            const min = grupo.permitirFracao ? "0.5" : "1";
+            const placeholder = grupo.permitirFracao ? "Ex: 1.5" : "Ex: 2";
+
+            // RESOLUÇÃO DO BUG: Convertendo o objeto para string JSON segura, eliminando a quebra de aspas
+            const itemDadosString = btoa(unescape(encodeURIComponent(JSON.stringify({
+                grupo: grupo.nomeGrupo,
+                categoria: cat.nomeCategoria,
+                medida: item.medida,
+                idItem: item.idItem,
+                unidade: grupo.unidadeMedia
+            }))));
+
+            return `
+                <tr>
+                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); font-size: 0.95rem;">${item.medida}</td>
+                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; font-weight: bold;">${item.valor}</td>
+                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); width: 120px;">
+                        <input type="number" id="qtd-${item.idItem}" step="${step}" min="${min}" placeholder="${placeholder}" style="padding: 6px; border-radius: 4px; border: 1px solid var(--border-color); width: 100%; font-size: 0.9rem; background: var(--bg-card); color: var(--text-main);">
+                    </td>
+                    <td style="padding: 12px 10px; border-bottom: 1px solid var(--border-color); text-align: right;">
+                        <button id="btn-add-${item.idItem}" class="btn-add" style="padding: 6px 14px; font-size: 0.85rem;" onclick="processarInclusao('${itemDadosString}')">
+                            + Incluir
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        return `
+            <div style="margin-bottom: 2.5rem;">
+                <h4 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 0.8rem; text-transform: uppercase; text-align: left; font-weight:700;">➔ ${cat.nomeCategoria}</h4>
+                <div style="width: 100%; overflow-x: auto; background-color: var(--bg-card); border-radius: 8px; border: 2px solid var(--border-color);">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead>
+                            <tr style="background-color: var(--border-color); color: var(--text-main); font-size: 0.85rem;">
+                                <th style="padding: 10px;">Medida</th>
+                                <th style="padding: 10px;">Ref. Valor</th>
+                                <th style="padding: 10px;">Qtd (${grupo.unidadeMedia})</th>
+                                <th style="padding: 10px; text-align: right;">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${htmlItens}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Efeito de troca de telas
+    document.getElementById('view-grupos').style.display = 'none';
+    document.getElementById('view-detalhes').style.display = 'block';
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+};
+
+window.voltarParaGrupos = function() {
+    document.getElementById('view-detalhes').style.display = 'none';
+    document.getElementById('view-grupos').style.display = 'block';
+};
+
+// 3. CAPTURA E INCLUSÃO TRATADA (FIM DOS CONFLITOS DE ASPAS)
+window.processarInclusao = function(encodedData) {
+    const item = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
+    const inputQtd = document.getElementById(`qtd-${item.idItem}`);
+    const btn = document.getElementById(`btn-add-${item.idItem}`);
+    
+    if (!inputQtd) return;
+    const qtdDigitada = parseFloat(inputQtd.value);
+
+    if (isNaN(qtdDigitada) || qtdDigitada <= 0) {
+        alert("Por favor, introduza uma quantidade válida.");
+        return;
+    }
+
+    const itemExistente = cart.find(i => i.idItem === item.idItem);
+    if (itemExistente) {
+        itemExistente.quantidade = qtdDigitada;
+    } else {
+        cart.push({ 
+            grupo: item.grupo, 
+            categoria: item.categoria, 
+            medida: item.medida, 
+            idItem: item.idItem, 
+            quantidade: qtdDigitada, 
+            unidade: item.unidade 
+        });
+    }
+
+    // Feedback visual de sucesso no botão
+    if (btn) {
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Incluído';
+        btn.classList.add('included');
+        setTimeout(() => {
+            btn.innerHTML = '+ Incluir';
+            btn.classList.remove('included');
+        }, 1000);
+    }
+
+    inputQtd.value = ""; 
+    updateOrderUI();
+};
+
+window.removeItemFromOrder = function(idItem) {
+    cart = cart.filter(item => item.idItem !== idItem);
+    updateOrderUI();
+};
+
+function updateOrderUI() {
+    const totalItems = cart.length;
+    if (countSpan) countSpan.textContent = totalItems;
+
+    if (totalItems > 0) {
+        if (badge) {
+            badge.classList.add('show');
+            badge.style.transform = 'scale(1)';
+        }
+    } else {
+        if (badge) {
+            badge.classList.remove('show');
+            badge.style.transform = 'scale(0)';
+        }
+        closeWishlistModal();
+    }
+
+    const container = document.getElementById('selected-items-container');
+    if (!container) return;
+
+    if (cart.length === 0) {
+        container.innerHTML = `<p class="empty-cart-msg">Nenhum produto adicionado ainda.</p>`;
+        return;
+    }
+
+    container.innerHTML = cart.map(item => `
+        <div class="wishlist-item-row">
+            <div>
+                <span style="display: block; font-size: 0.75rem; color: #9ca3af;">${item.grupo} ➔ ${item.categoria}</span>
+                <strong style="font-size: 0.9rem; color: #fff;">${item.medida}</strong>
+                <div style="margin-top: 4px; font-size: 0.85rem; color: var(--primary); font-weight: bold;">
+                    Qtd: ${item.quantidade} ${item.unidade}
+                </div>
+            </div>
+            <button class="btn-remove" onclick="removeItemFromOrder('${item.idItem}')">
+                ✕
+            </button>
+        </div>
+    `).join('');
+}
+
+function openWishlistModal() {
+    modal.classList.add('open');
+    overlay.classList.add('show');
+}
+function closeWishlistModal() {
+    modal.classList.remove('open');
+    overlay.classList.remove('show');
+}
+
+badge.addEventListener('click', openWishlistModal);
+closeModalBtn.addEventListener('click', closeWishlistModal);
+overlay.addEventListener('click', closeWishlistModal);
+
+// ENVIO WHATSAPP
 const form = document.getElementById('form-orcamento');
 if (form) {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-
-        if (cart.length === 0) {
-            alert("Por favor, adicione ao menos um item das tabelas antes de solicitar o orçamento!");
-            return;
-        }
+        if (cart.length === 0) return;
 
         const whatsappNumero = "5511917348484"; 
         const nome = document.getElementById('nome').value;
-        const obs = document.getElementById('observacoes').value || "Não informadas";
+        const obs = document.getElementById('observacoes').value || "Nenhuma informada";
 
         let itensTexto = "";
         cart.forEach((item) => {
-            itensTexto += `\n- *${item.grupo}* : ${item.medida} (${item.valor})`;
+            itensTexto += `\n- *${item.grupo}* (${item.categoria}) \n  Medida: _${item.medida}_ | *Qtd:* ${item.quantidade} ${item.unidade}`;
         });
 
         const message = `Olá, gostaria de solicitar um orçamento técnico!
 
-*Identificação:*
+*Identificação do Solicitante:*
 👤 *Nome / Empresa:* ${nome}
 
-*Itens Selecionados no Painel:* ${itensTexto}
+*Lista de Materiais de Interesse:* ${itensTexto}
 
-*Observações e Detalhes do Pedido:*
+*Observações Adicionais / Cortes:*
 ${obs}
 
 ---
-_Enviado através do Catálogo RQM_`;
+_Solicitação gerada via Catálogo Digital RQM_`;
 
-        const encodedMessage = encodeURIComponent(message);
-        window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodedMessage}`, '_blank');
+        window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(message)}`, '_blank');
     });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     initTheme();
-    renderProdutos();
+    renderCatalog();
 });
