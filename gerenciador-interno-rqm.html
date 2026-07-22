@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador Interno - Catálogo RQM</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .admin-login-box {
+            max-width: 420px;
+            margin: 80px auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 35px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .stat-card h4 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-card .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-top: 5px;
+            color: var(--text-main);
+        }
+
+        .admin-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .admin-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .item-row-admin {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge-destaque {
+            background: var(--primary);
+            color: #000;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-box">
+                <div class="logo-inner">
+                    <h2>RQM</h2>
+                    <span>PAINEL ADMIN</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <a href="index.html" class="btn-filter" style="text-decoration: none;"><i class="fa-solid fa-store"></i> Ir ao Catálogo</a>
+                <button id="theme-toggle" class="theme-btn" title="Alternar Tema">
+                    <span id="theme-icon">☀️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <div id="login-container" class="admin-login-box">
+            <div style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h2>Acesso Restrito</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 15px 0 25px 0;">
+                Digite a senha do painel para continuar.
+            </p>
+            <form id="form-login" style="display: flex; flex-direction: column; gap: 12px; max-width: 300px; margin: 0 auto;">
+                <div class="form-group" style="text-align: left;">
+                    <label for="admin-pass" style="font-size: 0.85rem; color: var(--text-muted);">Senha de Acesso</label>
+                    <input type="password" id="admin-pass" placeholder="Digite a senha..." required style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); width: 100%;">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; font-size: 1rem; padding: 12px;">Entrar no Painel</button>
+            </form>
+        </div>
+
+        <div id="admin-panel" style="display: none;">
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Gerenciador Geral do Catálogo</h2>
+                <button onclick="fazerLogoutAdmin()" class="btn-back" style="margin: 0; color: #ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>Acessos Registrados</h4>
+                    <div class="number" id="stat-acessos">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Cotações Geradas</h4>
+                    <div class="number" id="stat-cotacoes">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Depoimentos Cadastrados</h4>
+                    <div class="number" id="stat-reviews">0</div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3><i class="fa-solid fa-box-open"></i> A. Cadastrar Novo Produto Manualmente</h3>
+                <form id="form-add-produto" style="display: flex; flex-direction: column; gap: 12px;">
+                    <div class="grid-2-col">
+                        <div class="form-group">
+                            <label>Grupo / Categoria</label>
+                            <select id="manual-grupo" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                                <option value="tubos">Tubos Industriais</option>
+                                <option value="cantoneiras">Cantoneiras</option>
+                                <option value="chato">Ferro Chato</option>
+                                <option value="roldanas">Roldanas e Guias</option>
+                                <option value="gonzos">Gonzos e Dobradiças</option>
+                                <option value="discos">Discos Estampados</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Subcategoria / Linha</label>
+                            <input type="text" id="manual-categoria" placeholder="Ex: Tubos Quadrados, Abas Iguais..." required>
+                        </div>
+                    </div>
+                    <div class="grid-2-col">
+                        <div class="form-group">
+                            <label>Descrição / Medida do Produto</label>
+                            <input type="text" id="manual-medida" placeholder="Ex: TUBO QUADRADO 50X50 X 2,00MM" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Status Inicial de Estoque</label>
+                            <select id="manual-estoque" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                                <option value="1">Disponível em Estoque</option>
+                                <option value="0">Indisponível (Sob Consulta)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" onclick="adicionarProdutoManual()" class="btn-primary" style="align-self: flex-start;">+ Cadastrar Produto</button>
+                </form>
+
+                <h4 style="margin-top: 25px; margin-bottom: 10px;">Produtos Manuais Cadastrados</h4>
+                <div id="lista-produtos-manuais"></div>
+            </div>
+
+            <div class="admin-section">
+                <h3><i class="fa-solid fa-palette"></i> B. Personalização Visual do Catálogo</h3>
+                <div class="grid-2-col">
+                    <div class="form-group">
+                        <label>Subtítulo do Hero (Apresentação)</label>
+                        <textarea id="cfg-hero-text" rows="3" placeholder="Digite a frase de apresentação principal..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Cor Principal de Destaque (Hexadecimal)</label>
+                        <input type="color" id="cfg-primary-color" style="height: 45px; cursor: pointer; width: 100%;">
+                    </div>
+                </div>
+                <button onclick="salvarPersonalizacaoVisual()" class="btn-primary" style="margin-top: 10px;">Salvar Ajustes Visuais</button>
+            </div>
+
+            <div class="admin-section">
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> C. Histórico de Cotações Iniciadas</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Últimas cotações geradas pelos clientes através do botão do WhatsApp:</p>
+                <div id="container-historico-cotacoes"></div>
+                <button onclick="limparHistoricoCotacoes()" class="btn-back" style="color: #ef4444; font-size: 0.8rem; margin-top: 10px;">Limpar Histórico</button>
+            </div>
+
+            <div class="admin-section">
+                <h3><i class="fa-solid fa-star"></i> D. Depoimentos e Avaliações</h3>
+                <div id="container-admin-reviews"></div>
+            </div>
+
+            <div class="admin-section">
+                <h3><i class="fa-brands fa-whatsapp"></i> WhatsApp para Recebimento</h3>
+                <div class="form-group" style="max-width: 400px;">
+                    <label for="cfg-whatsapp">Número com DDD (Apenas Números)</label>
+                    <input type="text" id="cfg-whatsapp" placeholder="Ex: 5511917348484">
+                </div>
+                <button onclick="salvarWhatsappAdmin()" class="btn-primary" style="margin-top: 10px;">Salvar WhatsApp</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="./js/admin.js"></script>
+</body>
+</html>
