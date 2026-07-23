@@ -3,241 +3,472 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador Interno - Catálogo RQM</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Painel Administrativo - Catálogo Digital RQM</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-
-    <link rel="stylesheet" href="./css/style.css">
     <style>
-        .admin-login-box {
-            max-width: 420px;
-            margin: 80px auto;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 35px 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            text-align: center;
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --border-color: #334155;
+            --primary: #f59e0b;
+            --primary-hover: #d97706;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+            --success: #10b981;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--primary);
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .stat-card h4 {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .stat-card .number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-top: 5px;
+        body {
+            background-color: var(--bg-main);
             color: var(--text-main);
-        }
-
-        .admin-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .admin-section h3 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--primary);
+            flex-direction: column;
         }
 
-        .grid-2-col {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
-        }
-
-        .item-row-admin {
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .badge-destaque {
-            background: var(--primary);
+        header h1 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-voltar {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-voltar:hover {
+            background-color: var(--border-color);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            width: 90%;
+            flex: 1;
+        }
+
+        /* TELA DE LOGIN */
+        #section-login {
+            max-width: 400px;
+            margin: 4rem auto;
+            background-color: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        #section-login h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: var(--primary);
             color: #000;
-            font-size: 0.7rem;
-            padding: 2px 6px;
-            border-radius: 4px;
             font-weight: bold;
-            text-transform: uppercase;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* DASHBOARD */
+        #section-dashboard {
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: 0.2s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-editar {
+            background-color: var(--primary);
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
     </style>
 </head>
-<body class="dark-mode">
+<body>
 
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-box">
-                <div class="logo-inner">
-                    <h2>RQM</h2>
-                    <span>PAINEL ADMIN</span>
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <a href="index.html" class="btn-filter" style="text-decoration: none;"><i class="fa-solid fa-store"></i> Ir ao Catálogo</a>
-                <button id="theme-toggle" class="theme-btn" title="Alternar Tema">
-                    <span id="theme-icon">☀️</span>
-                </button>
-            </div>
-        </div>
+    <header>
+        <h1><i class="fa-solid fa-gears"></i> Painel Administrativo RQM</h1>
+        <a href="index.html" class="btn-voltar"><i class="fa-solid fa-store"></i> Ir para o Catálogo</a>
     </header>
 
-    <main class="container">
-
-        <div id="login-container" class="admin-login-box">
-            <div style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;">
-                <i class="fa-solid fa-user-shield"></i>
-            </div>
-            <h2>Acesso Restrito</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 15px 0 25px 0;">
-                Digite a senha do painel para continuar.
-            </p>
-            <form id="form-login" style="display: flex; flex-direction: column; gap: 12px; max-width: 300px; margin: 0 auto;">
-                <div class="form-group" style="text-align: left;">
-                    <label for="admin-pass" style="font-size: 0.85rem; color: var(--text-muted);">Senha de Acesso</label>
-                    <input type="password" id="admin-pass" placeholder="Digite a senha..." required style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); width: 100%;">
+    <div class="container">
+        
+        <section id="section-login">
+            <h2><i class="fa-solid fa-lock"></i> Acesso Restrito</h2>
+            <form id="form-login">
+                <div class="input-group">
+                    <label for="senha-admin"><i class="fa-solid fa-key"></i> Senha de Administrador:</label>
+                    <input type="password" id="senha-admin" placeholder="Digite a senha..." required autocomplete="current-password">
                 </div>
-                <button type="submit" class="btn-primary" style="width: 100%; font-size: 1rem; padding: 12px;">Entrar no Painel</button>
+                <button type="submit" class="btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel</button>
             </form>
-        </div>
+        </section>
 
-        <div id="admin-panel" style="display: none;">
-
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>Gerenciador Geral do Catálogo</h2>
-                <button onclick="fazerLogoutAdmin()" class="btn-back" style="margin: 0; color: #ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
-            </div>
-
+        <section id="section-dashboard">
+            
             <div class="stats-grid">
                 <div class="stat-card">
-                    <h4>Acessos Registrados</h4>
-                    <div class="number" id="stat-acessos">0</div>
+                    <h3 id="stat-acessos">0</h3>
+                    <p><i class="fa-solid fa-eye"></i> Acessos Registrados</p>
                 </div>
                 <div class="stat-card">
-                    <h4>Cotações Geradas</h4>
-                    <div class="number" id="stat-cotacoes">0</div>
+                    <h3 id="stat-cotacoes">0</h3>
+                    <p><i class="fa-solid fa-file-invoice-dollar"></i> Cotações Solicitadas</p>
                 </div>
                 <div class="stat-card">
-                    <h4>Depoimentos Cadastrados</h4>
-                    <div class="number" id="stat-reviews">0</div>
+                    <h3 id="stat-manuais">0</h3>
+                    <p><i class="fa-solid fa-box-open"></i> Produtos Manuais</p>
                 </div>
             </div>
 
-            <div class="admin-section">
-                <h3><i class="fa-solid fa-box-open"></i> A. Cadastrar Novo Produto Manualmente</h3>
-                <form id="form-add-produto" style="display: flex; flex-direction: column; gap: 12px;">
-                    <div class="grid-2-col">
-                        <div class="form-group">
-                            <label>Grupo / Categoria</label>
-                            <select id="manual-grupo" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
-                                <option value="tubos">Tubos Industriais</option>
-                                <option value="cantoneiras">Cantoneiras</option>
-                                <option value="chato">Ferro Chato</option>
-                                <option value="roldanas">Roldanas e Guias</option>
-                                <option value="gonzos">Gonzos e Dobradiças</option>
-                                <option value="discos">Discos Estampados</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Subcategoria / Linha</label>
-                            <input type="text" id="manual-categoria" placeholder="Ex: Tubos Quadrados, Abas Iguais..." required>
-                        </div>
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="mudarAba('tab-manuais', this)"><i class="fa-solid fa-boxes-stacked"></i> Produtos Manuais</button>
+                <button class="tab-btn" onclick="mudarAba('tab-bloqueios', this)"><i class="fa-solid fa-ban"></i> Palavras Bloqueadas</button>
+                <button class="tab-btn" onclick="mudarAba('tab-config', this)"><i class="fa-solid fa-sliders"></i> Configurações Gerais</button>
+                <button class="tab-btn" onclick="mudarAba('tab-csv', this)"><i class="fa-solid fa-file-csv"></i> Atualizar CSV Manual</button>
+            </div>
+
+            <div id="tab-manuais" class="tab-content active">
+                <h3 id="titulo-form-manual"><i class="fa-solid fa-plus-circle"></i> Cadastrar Produto Manualmente</h3>
+                
+                <form id="form-add-produto" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 1.5rem;">
+                    <input type="hidden" id="input-index-manual" value="-1">
+
+                    <div class="input-group" style="margin:0;">
+                        <label><i class="fa-solid fa-layer-group"></i> Grupo</label>
+                        <select id="select-grupo-manual">
+                            <option value="tubos">Tubos Galvanizados e Aço</option>
+                            <option value="kits-basculante">Kits Basculante</option>
+                            <option value="portas-aco">Portas de Aço</option>
+                            <option value="perfis-aco">Perfis em Aço Carbono</option>
+                            <option value="chapas-bobinas">Chapas e Bobinas</option>
+                            <option value="roldanas">Roldanas e Guias</option>
+                            <option value="rodajos">Rodajos e Trilhos</option>
+                            <option value="fitas">Fitas para Porta de Aço</option>
+                            <option value="ferragens">Ferragens e Diversos</option>
+                        </select>
                     </div>
-                    <div class="grid-2-col">
-                        <div class="form-group">
-                            <label>Descrição / Medida do Produto</label>
-                            <input type="text" id="manual-medida" placeholder="Ex: TUBO QUADRADO 50X50 X 2,00MM" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Status Inicial de Estoque</label>
-                            <select id="manual-estoque" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
-                                <option value="1">Disponível em Estoque</option>
-                                <option value="0">Indisponível (Sob Consulta)</option>
-                            </select>
-                        </div>
+                    <div class="input-group" style="margin:0;">
+                        <label><i class="fa-solid fa-tags"></i> Categoria Interna</label>
+                        <input type="text" id="input-categoria-manual" placeholder="Ex: Tubos Redondos">
                     </div>
-                    <button type="button" onclick="adicionarProdutoManual()" class="btn-primary" style="align-self: flex-start;">+ Cadastrar Produto</button>
+                    <div class="input-group" style="margin:0;">
+                        <label><i class="fa-solid fa-pen-to-square"></i> Descrição / Medida</label>
+                        <input type="text" id="input-medida-manual" placeholder="Ex: TUBO RED 2 POL" required>
+                    </div>
+                    <div class="input-group" style="margin:0;">
+                        <label><i class="fa-solid fa-boxes-stacked"></i> Estoque Inicial</label>
+                        <select id="select-estoque-manual">
+                            <option value="1">Em Estoque</option>
+                            <option value="0">Indisponível</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: flex-end; gap: 5px;">
+                        <button type="submit" id="btn-salvar-manual" class="btn-primary" style="padding: 10px;">
+                            <i class="fa-solid fa-floppy-disk"></i> Salvar
+                        </button>
+                        <button type="button" id="btn-cancelar-edicao" class="btn-danger" style="padding: 10px; display: none;" onclick="cancelarEdicaoManual()">
+                            <i class="fa-solid fa-xmark"></i> Cancelar
+                        </button>
+                    </div>
                 </form>
 
-                <h4 style="margin-top: 25px; margin-bottom: 10px;">Produtos Manuais Cadastrados</h4>
-                <div id="lista-produtos-manuais"></div>
+                <h3><i class="fa-solid fa-list-check"></i> Produtos Cadastrados (Editar / Excluir)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Grupo</th>
+                            <th>Categoria</th>
+                            <th>Descrição / Medida</th>
+                            <th>Status</th>
+                            <th style="text-align: right;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-produtos-manuais">
+                        </tbody>
+                </table>
             </div>
 
-            <div class="admin-section">
-                <h3><i class="fa-solid fa-palette"></i> B. Personalização Visual do Catálogo</h3>
-                <div class="grid-2-col">
-                    <div class="form-group">
-                        <label>Subtítulo do Hero (Apresentação)</label>
-                        <textarea id="cfg-hero-text" rows="3" placeholder="Digite a frase de apresentação principal..."></textarea>
+            <div id="tab-bloqueios" class="tab-content">
+                <h3><i class="fa-solid fa-filter-circle-xmark"></i> Gerenciar Palavras Bloqueadas no CSV</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Produtos contendo estas palavras serão ocultados da loja.</p>
+                
+                <form id="form-add-bloqueio" style="display: flex; gap: 10px; max-width: 500px; margin-bottom: 1.5rem;">
+                    <input type="text" id="input-palavra-bloqueada" placeholder="Ex: FRETE, SERVICO, SUCATA" style="flex:1; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: #fff;" required>
+                    <button type="submit" class="btn-primary" style="width: auto; padding: 0 20px;"><i class="fa-solid fa-ban"></i> Bloquear</button>
+                </form>
+
+                <div id="lista-palavras-bloqueadas" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+            </div>
+
+            <div id="tab-config" class="tab-content">
+                <h3><i class="fa-solid fa-sliders"></i> Configurações Gerais do Catálogo</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Altere os avisos e informações exibidos na loja.</p>
+
+                <form id="form-configuracoes" style="display: flex; flex-direction: column; gap: 1.2rem; max-width: 600px;">
+                    
+                    <div class="input-group" style="margin:0;">
+                        <label for="input-empresa-nome"><i class="fa-solid fa-building"></i> Nome da Empresa / Loja:</label>
+                        <input type="text" id="input-empresa-nome" placeholder="Ex: RQM Estamparia e Estruturas">
                     </div>
-                    <div class="form-group">
-                        <label>Cor Principal de Destaque (Hexadecimal)</label>
-                        <input type="color" id="cfg-primary-color" style="height: 45px; cursor: pointer; width: 100%;">
+
+                    <div class="input-group" style="margin:0;">
+                        <label for="input-whatsapp-num"><i class="fa-brands fa-whatsapp"></i> Número do WhatsApp (com DDD):</label>
+                        <input type="text" id="input-whatsapp-num" placeholder="Ex: 5511917348484" required>
                     </div>
+
+                    <div class="input-group" style="margin:0;">
+                        <label for="input-wsp-mensagem"><i class="fa-solid fa-comment-dots"></i> Mensagem Inicial do WhatsApp:</label>
+                        <input type="text" id="input-wsp-mensagem" placeholder="Ex: Olá! Gostaria de cotar os seguintes produtos:">
+                    </div>
+
+                    <div class="input-group" style="margin:0;">
+                        <label for="input-banner-aviso"><i class="fa-solid fa-bullhorn"></i> Banner de Aviso no Topo do Site:</label>
+                        <input type="text" id="input-banner-aviso" placeholder="Ex: Recesso nos dias 10 a 15 / Entregas grátis acima de R$ 500">
+                    </div>
+
+                    <div class="input-group" style="margin:0; display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="check-modo-manutencao" style="width: auto; cursor: pointer;">
+                        <label for="check-modo-manutencao" style="margin:0; cursor: pointer; color: #ef4444; font-weight: bold;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Ativar Modo Manutenção
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: fit-content; padding: 12px 25px;">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar Configurações
+                    </button>
+                </form>
+            </div>
+
+            <div id="tab-csv" class="tab-content">
+                <h3><i class="fa-solid fa-file-arrow-up"></i> Atualizar CSV Manualmente</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Carregue um arquivo CSV para atualizar a base de produtos temporariamente.</p>
+                
+                <div class="input-group" style="max-width: 450px;">
+                    <input type="file" id="input-csv-upload" accept=".csv">
                 </div>
-                <button onclick="salvarPersonalizacaoVisual()" class="btn-primary" style="margin-top: 10px;">Salvar Ajustes Visuais</button>
+                <button onclick="limparCSVPersonalizado()" class="btn-danger" style="margin-top: 10px; padding: 10px 15px;"><i class="fa-solid fa-rotate-left"></i> Restaurar CSV Padrão</button>
             </div>
 
-            <div class="admin-section">
-                <h3><i class="fa-solid fa-clock-rotate-left"></i> C. Histórico de Cotações Iniciadas</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Últimas cotações geradas pelos clientes através do botão do WhatsApp:</p>
-                <div id="container-historico-cotacoes"></div>
-                <button onclick="limparHistoricoCotacoes()" class="btn-back" style="color: #ef4444; font-size: 0.8rem; margin-top: 10px;">Limpar Histórico</button>
-            </div>
+        </section>
+    </div>
 
-            <div class="admin-section">
-                <h3><i class="fa-solid fa-star"></i> D. Depoimentos e Avaliações</h3>
-                <div id="container-admin-reviews"></div>
-            </div>
+    <script src="js/admin.js"></script>
+    <script>
+        document.getElementById('form-login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const inputSenha = document.getElementById('senha-admin');
+            if ((inputSenha ? inputSenha.value.trim() : '') === 'admin123') {
+                document.getElementById('section-login').style.display = 'none';
+                document.getElementById('section-dashboard').style.display = 'block';
+                sessionStorage.setItem('rqm_admin_logged', 'true');
+            } else {
+                alert('Senha incorreta! Digite admin123.');
+            }
+        });
 
-            <div class="admin-section">
-                <h3><i class="fa-brands fa-whatsapp"></i> WhatsApp para Recebimento</h3>
-                <div class="form-group" style="max-width: 400px;">
-                    <label for="cfg-whatsapp">Número com DDD (Apenas Números)</label>
-                    <input type="text" id="cfg-whatsapp" placeholder="Ex: 5511917348484">
-                </div>
-                <button onclick="salvarWhatsappAdmin()" class="btn-primary" style="margin-top: 10px;">Salvar WhatsApp</button>
-            </div>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('rqm_admin_logged') === 'true') {
+                document.getElementById('section-login').style.display = 'none';
+                document.getElementById('section-dashboard').style.display = 'block';
+            }
+        });
 
-        </div>
-
-    </main>
-
-    <script src="./js/admin.js"></script>
+        function mudarAba(idAba, elemento) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            if (elemento) elemento.classList.add('active');
+            const target = document.getElementById(idAba);
+            if (target) target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
