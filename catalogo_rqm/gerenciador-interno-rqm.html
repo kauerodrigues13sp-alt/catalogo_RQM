@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Catálogo Digital RQM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --border-color: #334155;
+            --primary: #f59e0b;
+            --primary-hover: #d97706;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-voltar {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-voltar:hover {
+            background-color: var(--border-color);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            width: 90%;
+            flex: 1;
+        }
+
+        /* TELA DE LOGIN */
+        #section-login {
+            max-width: 400px;
+            margin: 4rem auto;
+            background-color: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        #section-login h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #000;
+            font-weight: bold;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* DASHBOARD */
+        #section-dashboard {
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: 0.2s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .filter-controls select {
+            flex: 1;
+            min-width: 250px;
+            padding: 10px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .filter-controls input {
+            flex: 2;
+            min-width: 250px;
+            padding: 10px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-editar {
+            background-color: var(--primary);
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-origem {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .tag-grupo {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fa-solid fa-gears"></i> Painel Administrativo RQM</h1>
+        <a href="index.html" class="btn-voltar"><i class="fa-solid fa-store"></i> Ir para o Catálogo</a>
+    </header>
+
+    <div class="container">
+        <section id="section-login">
+            <h2><i class="fa-solid fa-lock"></i> Acesso Restrito</h2>
+            <form id="form-login">
+                <div class="input-group">
+                    <label for="senha-admin"><i class="fa-solid fa-key"></i> Senha de Administrador:</label>
+                    <input type="password" id="senha-admin" placeholder="Digite a senha..." required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;"><i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel</button>
+            </form>
+        </section>
+
+        <section id="section-dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="stat-acessos">0</h3>
+                    <p><i class="fa-solid fa-eye"></i> Acessos Registrados</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-cotacoes">0</h3>
+                    <p><i class="fa-solid fa-file-invoice-dollar"></i> Cotações Solicitadas</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-manuais">0</h3>
+                    <p><i class="fa-solid fa-box-open"></i> Itens Manuais</p>
+                </div>
+            </div>
+
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="mudarAba('tab-manuais', this)"><i class="fa-solid fa-boxes-stacked"></i> Gerenciar Produtos</button>
+                <button class="tab-btn" onclick="mudarAba('tab-bloqueios', this)"><i class="fa-solid fa-ban"></i> Palavras Bloqueadas</button>
+                <button class="tab-btn" onclick="mudarAba('tab-config', this)"><i class="fa-solid fa-sliders"></i> Configurações Gerais</button>
+                <button class="tab-btn" onclick="mudarAba('tab-csv', this)"><i class="fa-solid fa-file-csv"></i> Base CSV & Restauração</button>
+            </div>
+
+            <div id="tab-manuais" class="tab-content active">
+                <h3><i class="fa-solid fa-plus-circle"></i> Cadastrar Produto Manualmente</h3>
+                <form id="form-add-produto" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 1.5rem;">
+                    <div class="input-group" style="margin:0;">
+                        <label><i class="fa-solid fa-tag"></i> Descrição / Medida</label>
+                        <input type="text" id="manual-medida" placeholder="Ex: Tubo Quadrado 50x50" required>
+                    </div>
+                    <div class="input-group" style="margin:0;">
+                        <label><i class="fa-solid fa-layer-group"></i> Grupo</label>
+                        <select id="manual-grupo">
+                            </select>
+                    </div>
+                    <div style="display: flex; align-items: flex-end;">
+                        <button type="button" class="btn-primary" onclick="salvarProdutoManual()" style="width: 100%;"><i class="fa-solid fa-plus"></i> Adicionar</button>
+                    </div>
+                </form>
+
+                <hr style="border-color: var(--border-color); margin: 1.5rem 0;">
+
+                <h3><i class="fa-solid fa-list-check"></i> Pesquisar, Editar e Excluir Itens por Grupo</h3>
+                
+                <div class="filter-controls">
+                    <select id="seletorGrupoAdmin" onchange="carregarTabelaProdutosAdmin()">
+                        </select>
+
+                    <input type="text" id="inputBuscaAdmin" placeholder="Digite para filtrar por nome/medida..." oninput="carregarTabelaProdutosAdmin()">
+                </div>
+
+                <div style="max-height: 450px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Origem</th>
+                                <th>Grupo</th>
+                                <th>Descrição / Medida</th>
+                                <th>Estoque</th>
+                                <th style="text-align: right;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaProdutosAdmin">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-bloqueios" class="tab-content">
+                <h3><i class="fa-solid fa-ban"></i> Palavras Bloqueadas para Ocultar do Catálogo</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                    Itens da planilha CSV que contenham qualquer uma destas palavras serão ocultados automaticamente.
+                </p>
+                <div style="display: flex; gap: 10px; margin-bottom: 1rem;">
+                    <input type="text" id="inputNovaPalavra" placeholder="Ex: SUCATA, TESTE, FRETE..." style="flex:1; padding:10px; background:var(--bg-main); border:1px solid var(--border-color); color:#fff; border-radius:6px;">
+                    <button type="button" class="btn-primary" onclick="adicionarPalavraBloqueada()"><i class="fa-solid fa-plus"></i> Adicionar</button>
+                </div>
+                <div id="listaPalavrasBloqueadas" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                </div>
+            </div>
+
+            <div id="tab-config" class="tab-content">
+                <h3><i class="fa-solid fa-bullhorn"></i> Banner de Aviso no Topo</h3>
+                <div class="input-group">
+                    <label>Texto do Banner (Deixe em branco para ocultar):</label>
+                    <input type="text" id="inputBannerTexto" placeholder="Ex: 📢 Atendimento especial neste feriado!">
+                </div>
+
+                <h3 style="margin-top: 1.5rem;"><i class="fa-solid fa-screwdriver-wrench"></i> Modo Manutenção</h3>
+                <div class="input-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="checkManutencao" style="width: auto;">
+                    <label for="checkManutencao" style="margin:0; cursor:pointer;">Ativar tela de manutenção no catálogo público</label>
+                </div>
+
+                <button type="button" class="btn-primary" onclick="salvarConfiguracoesGerais()" style="margin-top: 1rem;"><i class="fa-solid fa-floppy-disk"></i> Salvar Configurações</button>
+            </div>
+
+            <div id="tab-csv" class="tab-content">
+                <h3><i class="fa-solid fa-file-csv"></i> Atualizar Base CSV Manual</h3>
+                <div class="input-group">
+                    <label>Selecione um novo arquivo PRODUTOS.CSV:</label>
+                    <input type="file" id="inputFileCSV" accept=".csv">
+                </div>
+
+                <hr style="border-color: var(--border-color); margin: 1.5rem 0;">
+
+                <h3><i class="fa-solid fa-rotate-left"></i> Restaurar Dados Originais do CSV</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                    Caso tenha editado descrições ou excluído itens por engano, clique no botão abaixo para desfazer as alterações e restaurar os dados originais de fábrica do CSV.
+                </p>
+                <button type="button" class="btn-danger" onclick="resetarModificacoesCSV()"><i class="fa-solid fa-arrow-rotate-left"></i> Resetar Alterações do CSV</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const NORMAS_GRUPOS = {
+            "tubos": "Tubos Galvanizados e Aço",
+            "kits-basculante": "Kits Basculante",
+            "portas-aco": "Portas de Aço",
+            "perfis-aco": "Perfis em Aço Carbono",
+            "chapas-bobinas": "Chapas e Bobinas Aço",
+            "roldanas": "Roldanas e Guias",
+            "rodajos": "Rodajos e Trilhos",
+            "fitas": "Fitas para Porta de Aço",
+            "ferragens": "Ferragens e Diversos",
+            "outros": "Outros / Geral"
+        };
+
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9]/g, "-")
+                .replace(/^-|-$/g, "");
+        }
+
+        function identificarSlugGrupo(nomeGrupoOuItem) {
+            let slug = slugify(nomeGrupoOuItem || '');
+            if (slug.includes("tubo")) return "tubos";
+            if (slug.includes("kit")) return "kits-basculante";
+            if (slug.includes("porta")) return "portas-aco";
+            if (slug.includes("perfil") || slug.includes("cantoneira") || slug.includes("ferro")) return "perfis-aco";
+            if (slug.includes("chapa") || slug.includes("bobina")) return "chapas-bobinas";
+            if (slug.includes("roldana")) return "roldanas";
+            if (slug.includes("rodajo") || slug.includes("trilho")) return "rodajos";
+            if (slug.includes("fita")) return "fitas";
+            if (slug.includes("ferragem")) return "ferragens";
+            return slug || "outros";
+        }
+
+        function formatarNomeGrupo(slug, nomeOriginal) {
+            if (NORMAS_GRUPOS[slug]) return NORMAS_GRUPOS[slug];
+            if (nomeOriginal) return nomeOriginal;
+            return slug.toUpperCase();
+        }
+
+        // --- LOGIN ---
+        document.getElementById('form-login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const inputSenha = document.getElementById('senha-admin');
+            if ((inputSenha ? inputSenha.value.trim() : '') === 'admin123') {
+                document.getElementById('section-login').style.display = 'none';
+                document.getElementById('section-dashboard').style.display = 'block';
+                sessionStorage.setItem('rqm_admin_logged', 'true');
+                inicializarPainelAdmin();
+            } else {
+                alert('Senha incorreta! Digite admin123.');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('rqm_admin_logged') === 'true') {
+                document.getElementById('section-login').style.display = 'none';
+                document.getElementById('section-dashboard').style.display = 'block';
+                inicializarPainelAdmin();
+            }
+
+            const fileInput = document.getElementById('inputFileCSV');
+            if (fileInput) {
+                fileInput.addEventListener('change', fazerUploadCSVManual);
+            }
+        });
+
+        function mudarAba(idAba, elemento) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            if (elemento) elemento.classList.add('active');
+            const target = document.getElementById(idAba);
+            if (target) target.classList.add('active');
+        }
+
+        function inicializarPainelAdmin() {
+            carregarEstatisticas();
+            carregarPalavrasBloqueadas();
+            carregarConfiguracoesGerais();
+            
+            carregarBaseCSV().then(() => {
+                popularDropdownsGrupos();
+                carregarTabelaProdutosAdmin();
+            });
+        }
+
+        // --- CARREGAMENTO DO PRODUTOS.CSV ---
+        function carregarBaseCSV() {
+            return new Promise((resolve) => {
+                const csvCustom = localStorage.getItem("rqm_custom_csv");
+
+                const callbackParse = (results) => {
+                    if (results && results.data) {
+                        const prods = processarLinhasCSV(results.data);
+                        localStorage.setItem('rqm_cache_csv', JSON.stringify(prods));
+                    }
+                    resolve();
+                };
+
+                if (csvCustom) {
+                    Papa.parse(csvCustom, {
+                        encoding: "ISO-8859-1",
+                        skipEmptyLines: true,
+                        complete: callbackParse
+                    });
+                } else {
+                    Papa.parse("./PRODUTOS.CSV", {
+                        download: true,
+                        encoding: "ISO-8859-1",
+                        skipEmptyLines: true,
+                        complete: callbackParse,
+                        error: () => resolve()
+                    });
+                }
+            });
+        }
+
+        function processarLinhasCSV(linhas) {
+            let prods = [];
+            if (!linhas || linhas.length === 0) return prods;
+
+            let idxDescricao = -1, idxGrupo = -1;
+            let linhaInicio = 0;
+
+            for (let i = 0; i < linhas.length; i++) {
+                const rowUpper = linhas[i].map(c => String(c).toUpperCase().trim());
+                if (rowUpper.includes("DESCRIÇÃO") || rowUpper.includes("DESCRICAO")) {
+                    idxDescricao = rowUpper.indexOf("DESCRIÇÃO");
+                    if (idxDescricao === -1) idxDescricao = rowUpper.indexOf("DESCRICAO");
+                    idxGrupo = rowUpper.indexOf("GRUPO");
+                    linhaInicio = i + 1;
+                    break;
+                }
+            }
+
+            if (idxDescricao === -1) idxDescricao = 2;
+
+            for (let i = linhaInicio; i < linhas.length; i++) {
+                const linha = linhas[i];
+                if (!linha || linha.length <= idxDescricao) continue;
+
+                let desc = String(linha[idxDescricao]).trim();
+                if (!desc || desc.toUpperCase() === "DESCRIÇÃO" || desc.toUpperCase() === "DESCRICAO") continue;
+
+                let grupoCSV = (idxGrupo !== -1 && linha[idxGrupo]) ? String(linha[idxGrupo]).trim() : "";
+                let grupoSlug = identificarSlugGrupo(grupoCSV || desc);
+                let grupoNome = formatarNomeGrupo(grupoSlug, grupoCSV);
+
+                prods.push({
+                    idItem: `csv_prod_${i}`,
+                    medida: desc,
+                    grupoSlug: grupoSlug,
+                    grupoNome: grupoNome,
+                    estoque: "Em Estoque"
+                });
+            }
+
+            return prods;
+        }
+
+        // --- PREENCHIMENTO DINÂMICO DE TODOS OS GRUPOS ---
+        function popularDropdownsGrupos() {
+            const seletorAdmin = document.getElementById('seletorGrupoAdmin');
+            const seletorManual = document.getElementById('manual-grupo');
+            if (!seletorAdmin || !seletorManual) return;
+
+            const mapaGruposEncontrados = new Map();
+
+            // Adiciona grupos padrão do sistema
+            Object.keys(NORMAS_GRUPOS).forEach(slug => {
+                mapaGruposEncontrados.set(slug, NORMAS_GRUPOS[slug]);
+            });
+
+            // Extrai grupos presentes nos itens do CSV
+            const csvSalvo = JSON.parse(localStorage.getItem('rqm_cache_csv')) || [];
+            csvSalvo.forEach(p => {
+                if (p.grupoSlug) {
+                    const nome = p.grupoNome || formatarNomeGrupo(p.grupoSlug, '');
+                    mapaGruposEncontrados.set(p.grupoSlug, nome);
+                }
+            });
+
+            // Extrai grupos de produtos cadastrados manualmente
+            const manuais = JSON.parse(localStorage.getItem('rqm_produtos_manuais')) || [];
+            manuais.forEach(p => {
+                const slug = identificarSlugGrupo(p.grupo || p.medida);
+                const nome = formatarNomeGrupo(slug, p.grupo);
+                mapaGruposEncontrados.set(slug, nome);
+            });
+
+            // Preenche o Filtro de Consulta
+            let htmlFilter = `<option value="todos">🔍 Selecione um Grupo (Exibir Todos)</option>`;
+            mapaGruposEncontrados.forEach((nome, slug) => {
+                htmlFilter += `<option value="${slug}">${nome}</option>`;
+            });
+            seletorAdmin.innerHTML = htmlFilter;
+
+            // Preenche o Cadastro Manual
+            let htmlManual = ``;
+            mapaGruposEncontrados.forEach((nome, slug) => {
+                htmlManual += `<option value="${slug}">${nome}</option>`;
+            });
+            seletorManual.innerHTML = htmlManual;
+        }
+
+        // --- ESTATÍSTICAS ---
+        function carregarEstatisticas() {
+            const acessos = localStorage.getItem('rqm_acessos') || '1';
+            const cotacoes = localStorage.getItem('rqm_cotacoes_cont') || '0';
+            const manuais = (JSON.parse(localStorage.getItem('rqm_produtos_manuais')) || []).length;
+
+            document.getElementById('stat-acessos').innerText = acessos;
+            document.getElementById('stat-cotacoes').innerText = cotacoes;
+            document.getElementById('stat-manuais').innerText = manuais;
+        }
+
+        // --- MANIPULAÇÃO DE PRODUTOS E FILTRO POR GRUPO ---
+        function carregarTabelaProdutosAdmin() {
+            const tabela = document.getElementById('tabelaProdutosAdmin');
+            const filtroGrupo = document.getElementById('seletorGrupoAdmin').value;
+            const filtroTexto = document.getElementById('inputBuscaAdmin').value.toLowerCase().trim();
+            if (!tabela) return;
+
+            const excluidos = JSON.parse(localStorage.getItem('rqm_produtos_excluidos')) || [];
+            const editados = JSON.parse(localStorage.getItem('rqm_produtos_editados')) || {};
+            const manuais = JSON.parse(localStorage.getItem('rqm_produtos_manuais')) || [];
+
+            let html = '';
+            let contador = 0;
+
+            // 1. Produtos Manuais
+            manuais.forEach((prod, index) => {
+                const idItem = `manual-item-${index}`;
+                if (excluidos.includes(idItem)) return;
+
+                const medida = editados[idItem] ? editados[idItem].medida : (prod.medida || prod.nome);
+                const estoque = editados[idItem] ? editados[idItem].estoque : (prod.estoque || "Em Estoque");
+                const grupoSlug = identificarSlugGrupo(prod.grupo || medida);
+
+                if (filtroGrupo !== 'todos' && grupoSlug !== filtroGrupo) return;
+                if (filtroTexto && !medida.toLowerCase().includes(filtroTexto)) return;
+
+                contador++;
+                html += criarLinhaTabela(idItem, medida, estoque, 'Manual', grupoSlug);
+            });
+
+            // 2. Produtos do CSV
+            const csvSalvo = JSON.parse(localStorage.getItem('rqm_cache_csv')) || [];
+            csvSalvo.forEach((prod) => {
+                if (excluidos.includes(prod.idItem)) return;
+
+                const medida = editados[prod.idItem] ? editados[prod.idItem].medida : prod.medida;
+                const estoque = editados[prod.idItem] ? editados[prod.idItem].estoque : prod.estoque;
+                const grupoSlug = prod.grupoSlug || identificarSlugGrupo(medida);
+
+                if (filtroGrupo !== 'todos' && grupoSlug !== filtroGrupo) return;
+                if (filtroTexto && !medida.toLowerCase().includes(filtroTexto)) return;
+
+                contador++;
+                html += criarLinhaTabela(prod.idItem, medida, estoque, 'Base CSV', grupoSlug);
+            });
+
+            tabela.innerHTML = html || `<tr><td colspan="5" style="text-align:center; color: var(--text-muted); padding: 25px;">Nenhum produto encontrado para este filtro.</td></tr>`;
+        }
+
+        function criarLinhaTabela(idItem, medida, estoque, origem, grupoSlug) {
+            const nomeGrupo = NORMAS_GRUPOS[grupoSlug] || grupoSlug.toUpperCase();
+            return `
+                <tr>
+                    <td><span class="tag-origem">${origem}</span></td>
+                    <td><span class="tag-grupo">${nomeGrupo}</span></td>
+                    <td><strong>${medida}</strong></td>
+                    <td>${estoque}</td>
+                    <td style="text-align: right;">
+                        <button class="btn-editar" onclick="editarProdutoAdmin('${idItem}', '${medida.replace(/'/g, "\\'")}', '${estoque}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn-danger" onclick="excluirProdutoAdmin('${idItem}', '${medida.replace(/'/g, "\\'")}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function salvarProdutoManual() {
+            const medida = document.getElementById('manual-medida').value.trim();
+            const grupo = document.getElementById('manual-grupo').value;
+
+            if (!medida) {
+                alert('Digite a descrição do produto.');
+                return;
+            }
+
+            let manuais = JSON.parse(localStorage.getItem('rqm_produtos_manuais')) || [];
+            manuais.push({ medida, grupo, estoque: "Em Estoque" });
+            localStorage.setItem('rqm_produtos_manuais', JSON.stringify(manuais));
+
+            document.getElementById('manual-medida').value = '';
+            alert('Produto manual cadastrado com sucesso!');
+            popularDropdownsGrupos();
+            carregarTabelaProdutosAdmin();
+            carregarEstatisticas();
+        }
+
+        function editarProdutoAdmin(idItem, descricaoAtual, estoqueAtual) {
+            const novaDescricao = prompt("Nova descrição:", descricaoAtual);
+            if (novaDescricao === null) return;
+
+            const novoEstoque = prompt("Situação / Estoque:", estoqueAtual);
+            if (novoEstoque === null) return;
+
+            let editados = JSON.parse(localStorage.getItem('rqm_produtos_editados')) || {};
+            editados[idItem] = {
+                medida: novaDescricao.trim(),
+                estoque: novoEstoque.trim()
+            };
+
+            localStorage.setItem('rqm_produtos_editados', JSON.stringify(editados));
+            alert("Produto alterado com sucesso!");
+            carregarTabelaProdutosAdmin();
+        }
+
+        function excluirProdutoAdmin(idItem, descricao) {
+            if (confirm(`Remover "${descricao}" do catálogo?`)) {
+                let excluidos = JSON.parse(localStorage.getItem('rqm_produtos_excluidos')) || [];
+                if (!excluidos.includes(idItem)) {
+                    excluidos.push(idItem);
+                    localStorage.setItem('rqm_produtos_excluidos', JSON.stringify(excluidos));
+                }
+                alert("Produto removido com sucesso!");
+                carregarTabelaProdutosAdmin();
+            }
+        }
+
+        function resetarModificacoesCSV() {
+            if (confirm("Isto restaurará todas as informações originais do arquivo CSV. Deseja continuar?")) {
+                localStorage.removeItem('rqm_produtos_excluidos');
+                localStorage.removeItem('rqm_produtos_editados');
+                localStorage.removeItem('rqm_custom_csv');
+                alert("Base CSV restaurada com sucesso!");
+                carregarBaseCSV().then(() => {
+                    popularDropdownsGrupos();
+                    carregarTabelaProdutosAdmin();
+                });
+            }
+        }
+
+        function fazerUploadCSVManual(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                localStorage.setItem("rqm_custom_csv", evt.target.result);
+                alert("Nova base CSV enviada com sucesso!");
+                carregarBaseCSV().then(() => {
+                    popularDropdownsGrupos();
+                    carregarTabelaProdutosAdmin();
+                });
+            };
+            reader.readAsText(file, "ISO-8859-1");
+        }
+
+        // --- PALAVRAS BLOQUEADAS ---
+        function carregarPalavrasBloqueadas() {
+            const palavras = JSON.parse(localStorage.getItem('rqm_palavras_bloqueadas')) || ["SERVICO", "FRETE", "DESCONTO", "SUCATA", "TESTE", "TAXA"];
+            const div = document.getElementById('listaPalavrasBloqueadas');
+            div.innerHTML = palavras.map(p => `
+                <span style="background:var(--bg-main); border:1px solid var(--border-color); padding:5px 10px; border-radius:15px; font-size:0.85rem; display:inline-flex; align-items:center; gap:8px;">
+                    ${p} <i class="fa-solid fa-xmark" style="cursor:pointer; color:var(--danger);" onclick="removerPalavraBloqueada('${p}')"></i>
+                </span>
+            `).join('');
+        }
+
+        function adicionarPalavraBloqueada() {
+            const input = document.getElementById('inputNovaPalavra');
+            const palavra = input.value.trim().toUpperCase();
+            if (!palavra) return;
+
+            let palavras = JSON.parse(localStorage.getItem('rqm_palavras_bloqueadas')) || ["SERVICO", "FRETE", "DESCONTO", "SUCATA", "TESTE", "TAXA"];
+            if (!palavras.includes(palavra)) {
+                palavras.push(palavra);
+                localStorage.setItem('rqm_palavras_bloqueadas', JSON.stringify(palavras));
+                input.value = '';
+                carregarPalavrasBloqueadas();
+            }
+        }
+
+        function removerPalavraBloqueada(palavra) {
+            let palavras = JSON.parse(localStorage.getItem('rqm_palavras_bloqueadas')) || [];
+            palavras = palavras.filter(p => p !== palavra);
+            localStorage.setItem('rqm_palavras_bloqueadas', JSON.stringify(palavras));
+            carregarPalavrasBloqueadas();
+        }
+
+        // --- CONFIGURAÇÕES GERAIS ---
+        function carregarConfiguracoesGerais() {
+            document.getElementById('inputBannerTexto').value = localStorage.getItem('rqm_banner_aviso') || '';
+            document.getElementById('checkManutencao').checked = localStorage.getItem('rqm_modo_manutencao') === 'true';
+        }
+
+        function salvarConfiguracoesGerais() {
+            const banner = document.getElementById('inputBannerTexto').value.trim();
+            const manutencao = document.getElementById('checkManutencao').checked;
+
+            localStorage.setItem('rqm_banner_aviso', banner);
+            localStorage.setItem('rqm_modo_manutencao', manutencao ? 'true' : 'false');
+            alert('Configurações salvas com sucesso!');
+        }
+    </script>
+</body>
+</html>

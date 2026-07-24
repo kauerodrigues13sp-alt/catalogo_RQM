@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Digital RQM - Estamparia de Metais</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="dark-mode">
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="./img/logo.png" alt="RQM Estamparia de Metais" class="site-logo">
+                </a>
+            </div>
+
+            <button id="theme-toggle" class="theme-btn" title="Alternar Tema">
+                <span id="theme-icon">☀️</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section id="view-grupos" class="view-section">
+            <div class="hero-header">
+                <p class="hero-subtitle">
+                    A RQM desenvolve e produz peças estampadas e fornece materiais de alta qualidade.<br>
+                    Selecione um grupo abaixo para ver as medidas e montar seu orçamento técnico rápido.
+                </p>
+
+                <div class="search-box-container">
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Pesquisar produto, medida ou grupo..." autocomplete="off">
+                        <button id="btnClearSearch" class="btn-clear" style="display:none;">✕</button>
+                    </div>
+                    <div id="autocompleteDropdown" class="autocomplete-dropdown" style="display: none;"></div>
+                </div>
+
+                <div class="filter-buttons">
+                    <button class="btn-filter active" data-filter="todos">Todos</button>
+                    <button class="btn-filter" data-filter="perfis">Perfis e Tubos</button>
+                    <button class="btn-filter" data-filter="estampados">Estampados</button>
+                    <button class="btn-filter" data-filter="acessorios">Acessórios</button>
+                </div>
+            </div>
+
+            <div id="product-grid" class="product-grid"></div>
+
+            <div id="noResults" class="no-results" style="display: none;">
+                <p>Nenhum produto ou grupo foi encontrado com o termo pesquisado.</p>
+            </div>
+        </section>
+
+        <section id="view-detalhes" class="view-section" style="display: none;">
+            <button class="btn-back" onclick="voltarParaGrupos()">
+                <i class="fa-solid fa-arrow-left"></i> Voltar aos Grupos
+            </button>
+
+            <h2 id="detalhe-titulo-grupo" class="group-title">--</h2>
+
+            <div class="notice-box">
+                <i class="fa-solid fa-circle-info notice-icon"></i>
+                <div>
+                    <strong>Nota Comercial:</strong> Dispomos de uma linha completa de medidas sob consulta. Caso não encontre a variação exata que necessita abaixo, você pode prosseguir com a cotação padrão e descrever a medida desejada no campo de observações.
+                </div>
+            </div>
+
+            <div id="detalhe-conteudo-categorias"></div>
+        </section>
+
+        <section class="reviews-section">
+            <h3 class="reviews-title">
+                <i class="fa-solid fa-star star-highlight"></i> O que nossos clientes dizem
+            </h3>
+            
+            <div id="home-reviews-container" class="reviews-grid"></div>
+
+            <div class="add-review-box">
+                <h4>Deixe sua avaliação</h4>
+                <div class="star-rating">
+                    <i class="fa-regular fa-star" data-rating="1"></i>
+                    <i class="fa-regular fa-star" data-rating="2"></i>
+                    <i class="fa-regular fa-star" data-rating="3"></i>
+                    <i class="fa-regular fa-star" data-rating="4"></i>
+                    <i class="fa-regular fa-star" data-rating="5"></i>
+                </div>
+                <div class="review-inputs">
+                    <input type="text" id="review-author" placeholder="Seu Nome / Nome da Empresa">
+                    <textarea id="review-text" rows="2" placeholder="Escreva seu comentário sobre nosso atendimento ou produtos..."></textarea>
+                    <button id="btn-submit-review" class="btn-primary">Enviar Avaliação</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="wishlistBadge" class="floating-cart-btn">
+        <i class="fa-solid fa-file-lines"></i>
+        <span id="wishlistCount" class="cart-count">0</span>
+    </div>
+
+    <div id="modalOverlay" class="modal-overlay"></div>
+    <div id="wishlistModal" class="modal-container">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-list-check"></i> Sua Cotação Técnica</h3>
+            <button id="closeModal" class="btn-close">×</button>
+        </div>
+
+        <div class="modal-body">
+            <div id="selected-items-container" class="cart-items-list"></div>
+
+            <form id="form-orcamento" class="quote-form">
+                <div class="form-group">
+                    <label for="nome">Nome / Empresa *</label>
+                    <input type="text" id="nome" required placeholder="Digite seu nome ou empresa">
+                </div>
+                <div class="form-group">
+                    <label for="observacoes">Observações / Instruções de Corte</label>
+                    <textarea id="observacoes" rows="3" placeholder="Insira detalhes específicos de medidas, cortes ou entrega..."></textarea>
+                </div>
+                <button type="submit" class="btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> Enviar Solicitação via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer style="background-color: var(--bg-card, #1e293b); border-top: 1px solid var(--border-color, #334155); padding: 40px 20px 20px 20px; color: var(--text-main, #f8fafc); margin-top: 50px;">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+            
+            <div>
+                <h3 style="color: var(--primary, #f59e0b); font-size: 1.2rem; margin-bottom: 12px; font-weight: 700;">Estamparia de Metais RQM</h3>
+                <p style="font-size: 0.9rem; color: #94a3b8; line-height: 1.5;">
+                    Fornecedor de chapas metálicas, perfis, tubos e acessórios para serralheria e indústria em São Paulo.
+                </p>
+            </div>
+
+            <div>
+                <h4 style="font-size: 1rem; margin-bottom: 12px; text-transform: uppercase; color: #e2e8f0;">Endereço e Atendimento</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px;">
+                    <i class="fa-solid fa-location-dot" style="color: var(--primary, #f59e0b); margin-right: 6px;"></i>
+                    R. Beberibe, 48-a - Vila Nova Manchester<br>São Paulo - SP, 03443-050
+                </p>
+                <p style="font-size: 0.9rem; color: #94a3b8;">
+                    <i class="fa-solid fa-clock" style="color: var(--primary, #f59e0b); margin-right: 6px;"></i>
+                    Seg. a Sex.: 08:00 às 12:00 e 13:00 às 17:45
+                </p>
+            </div>
+
+            <div>
+                <h4 style="font-size: 1rem; margin-bottom: 12px; text-transform: uppercase; color: #e2e8f0;">Contato & Localização</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 12px;">
+                    <i class="fa-solid fa-phone" style="color: var(--primary, #f59e0b); margin-right: 6px;"></i>
+                    (11) 2942-8484 / (11) 91734-8484
+                </p>
+                <a href="https://www.google.com/maps/place/R.+Beberibe,+48-a+-+Vila+Nova+Manchester,+S%C3%A3o+Paulo+-+SP,+03443-050" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; background-color: var(--primary, #f59e0b); color: #000; padding: 10px 16px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-decoration: none;">
+                    <i class="fa-solid fa-route"></i> Como Chegar (GPS)
+                </a>
+            </div>
+
+        </div>
+
+        <div style="max-width: 1200px; margin: 30px auto 0 auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.8rem; color: #64748b;">
+            © Estamparia de metais RQM - Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
