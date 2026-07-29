@@ -63,27 +63,39 @@ body {
     align-items: center;
 }
 
-/* CONTAINER DA LOGO */
+/* ==========================================================================
+   ESTILOS E EFEITOS DA LOGO
+   ========================================================================== */
 .logo-container {
     display: flex;
     align-items: center;
 }
 
-.logo-container a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
-
 .site-logo {
-    max-height: 55px;
+    max-height: 52px;
     width: auto;
     object-fit: contain;
-    transition: transform 0.2s ease, filter 0.2s ease;
+    border-radius: 8px; /* Cantos levemente arredondados */
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.05); /* Fundo sutil para destacar a imagem */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    user-select: none;
 }
 
-.site-logo:hover {
-    transform: scale(1.02);
+/* Efeito ao passar o mouse ou manter pressionado no celular */
+.site-logo:hover, .site-logo:active {
+    transform: translateY(-2px) scale(1.03);
+    border-color: var(--primary);
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); /* Brilho suave na cor primária */
+    background: rgba(245, 158, 11, 0.08);
+}
+
+/* Animação suave ao dar o clique do efeito Admin */
+.site-logo:active {
+    transform: scale(0.96);
 }
 
 /* BOTÃO DE TEMA */

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CATÁLOGO DIGITAL RQM - CÓDIGO COMPLETO INTEGRADO COM PAINEL ADMIN
+   CATÁLOGO DIGITAL RQM - CÓDIGO COMPLETO COM SUPORTE A EDIÇÃO/EXCLUSÃO DA BASE
    ========================================================================== */
 
 let catalogoGrupos = [];
@@ -17,125 +17,221 @@ const closeModalBtn = document.getElementById('closeModal');
 // Palavras bloqueadas lidas dinamicamente do Painel Admin (ou lista padrão)
 const PALAVRAS_BLOQUEADAS = JSON.parse(localStorage.getItem('rqm_palavras_bloqueadas')) || ["SERVICO", "FRETE", "DESCONTO", "SUCATA", "TESTE", "TAXA"];
 
-// Imagens temáticas alinhadas com cada descrição de produto
+// Imagens temáticas alinhadas com cada grupo
 const IMAGENS_GRUPOS = {
     "tubos": "https://images.unsplash.com/photo-1542382257-80dedb725088?auto=format&fit=crop&q=80&w=400",
-    "cantoneiras": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=400",
-    "chato": "https://images.unsplash.com/photo-1535813547-99c456a41d4a?auto=format&fit=crop&q=80&w=400",
+    "kits-basculante": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400",
+    "portas-aco": "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&q=80&w=400",
+    "perfis-aco": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=400",
+    "chapas-bobinas": "https://images.unsplash.com/photo-1535813547-99c456a41d4a?auto=format&fit=crop&q=80&w=400",
     "roldanas": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400",
-    "gonzos": "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&q=80&w=400",
-    "discos": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=400",
+    "rodajos": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=400",
+    "fitas": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=400",
+    "ferragens": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=400",
     "padrao": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=400"
 };
 
-// Mapeamento auxiliar de nomes e filtros por grupo
+// Mapeamento auxiliar de configurações padrão por grupo
 const MAPA_GRUPOS_CONFIG = {
-    "tubos": { nome: "Tubos Industriais", tipo: "perfis", imagem: IMAGENS_GRUPOS.tubos, unidade: "barra(s)", fracao: true },
-    "cantoneiras": { nome: "Cantoneiras", tipo: "perfis", imagem: IMAGENS_GRUPOS.cantoneiras, unidade: "barra(s)", fracao: true },
-    "chato": { nome: "Ferro Chato", tipo: "perfis", imagem: IMAGENS_GRUPOS.chato, unidade: "barra(s)", fracao: true },
+    "tubos": { nome: "Tubos Galvanizados e Aço", tipo: "perfis", imagem: IMAGENS_GRUPOS.tubos, unidade: "barra(s)", fracao: true },
+    "kits-basculante": { nome: "Kits Basculante", tipo: "acessorios", imagem: IMAGENS_GRUPOS["kits-basculante"], unidade: "unidade(s)", fracao: false },
+    "portas-aco": { nome: "Portas de Aço e Componentes", tipo: "acessorios", imagem: IMAGENS_GRUPOS["portas-aco"], unidade: "unidade(s)", fracao: false },
+    "perfis-aco": { nome: "Perfis em Aço Carbono", tipo: "perfis", imagem: IMAGENS_GRUPOS["perfis-aco"], unidade: "barra(s)", fracao: true },
+    "chapas-bobinas": { nome: "Chapas e Bobinas Aço", tipo: "estampados", imagem: IMAGENS_GRUPOS["chapas-bobinas"], unidade: "unidade(s)", fracao: false },
     "roldanas": { nome: "Roldanas e Guias", tipo: "acessorios", imagem: IMAGENS_GRUPOS.roldanas, unidade: "unidade(s)", fracao: false },
-    "gonzos": { nome: "Gonzos e Dobradiças", tipo: "acessorios", imagem: IMAGENS_GRUPOS.gonzos, unidade: "unidade(s)", fracao: false },
-    "discos": { nome: "Discos Estampados", tipo: "estampados", imagem: IMAGENS_GRUPOS.discos, unidade: "unidade(s)", fracao: false },
-    "acessorios": { nome: "Acessórios e Diversos", tipo: "acessorios", imagem: IMAGENS_GRUPOS.padrao, unidade: "unidade(s)", fracao: false }
+    "rodajos": { nome: "Rodajos e Trilhos", tipo: "acessorios", imagem: IMAGENS_GRUPOS.rodajos, unidade: "unidade(s)", fracao: false },
+    "fitas": { nome: "Fitas para Porta de Aço", tipo: "acessorios", imagem: IMAGENS_GRUPOS.fitas, unidade: "unidade(s)", fracao: false },
+    "ferragens": { nome: "Ferragens e Diversos", tipo: "acessorios", imagem: IMAGENS_GRUPOS.ferragens, unidade: "unidade(s)", fracao: false }
 };
 
-// Textos instrucionais específicos para a busca interna de cada grupo
+// Textos de pesquisa por grupo
 const PLACEHOLDERS_GRUPOS = {
-    "tubos": "Busque por medida de tubo (ex: 50x50, 1.1/2, Sch 40, 20x20)...",
-    "cantoneiras": "Busque por bitola ou chapa (ex: 1x1/8, 1.1/2 x 3/16, 2x1/4)...",
-    "chato": "Busque por largura/espessura (ex: 1/2 x 1/8, 3/4 x 3/16)...",
-    "roldanas": "Busque por canal, diâmetro ou tipo (ex: 3 polegadas, canal U, V)...",
-    "gonzos": "Busque por número ou tamanho (ex: Gonzo nº 2, 3/4, Dobradiça)...",
-    "discos": "Busque por diâmetro ou furo (ex: Disco 100mm, 2 polegadas)...",
+    "tubos": "Busque por medida de tubo (ex: 15x15, 20x20, Galvanizado)...",
+    "kits-basculante": "Busque por medida do kit basculante...",
+    "portas-aco": "Busque por componente de porta de aço...",
+    "perfis-aco": "Busque por perfil, cantoneira ou ferro chato...",
+    "chapas-bobinas": "Busque por espessura ou tipo de chapa...",
+    "roldanas": "Busque por diâmetro ou modelo de roldana...",
+    "rodajos": "Busque por rodajo ou modelo...",
+    "fitas": "Busque por largura da fita (ex: 25mm, 30mm)...",
+    "ferragens": "Busque por ferragem ou acessório...",
     "padrao": "Pesquisar medida ou produto neste grupo..."
 };
 
-// --- 1. LEITURA E PARSING INTELIGENTE DO PRODUTOS.CSV + PRODUTOS MANUAIS ---
+// Helper para abrir o Painel Admin
+function abrirPainelAdmin() {
+    window.location.href = './gerenciador-interno-rqm.html';
+}
+
+// Helper para normalizar slugs de IDs de grupo
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "-")
+        .replace(/^-|-$/g, "");
+}
+
+// --- HIGIENIZADOR DE CARACTERES CORROMPIDOS ---
+function corrigirTextoCorrompido(texto) {
+    if (!texto) return "";
+    return String(texto)
+        .replace(/CÃ“DIGO/g, "CÓDIGO")
+        .replace(/DESCRIÃ‡ÃƒO/g, "DESCRIÇÃO")
+        .replace(/SITUAÃ‡ÃƒO/g, "SITUAÇÃO")
+        .replace(/LOCALIZAÃ‡ÃƒO/g, "LOCALIZAÇÃO")
+        .replace(/PORTAS DE AÃ‡O/g, "PORTAS DE AÇO")
+        .replace(/DOBRADIÃ‡A/g, "DOBRADIÇA")
+        .replace(/DOBRADIÃ‡AS/g, "DOBRADIÇAS")
+        .replace(/AÃ‡O/g, "AÇO")
+        .replace(/Ã‡/g, "Ç")
+        .replace(/Ãƒ/g, "Ã")
+        .replace(/Ã“/g, "Ó")
+        .replace(/Ã/g, "Á")
+        .replace(/Ã‰/g, "É")
+        .replace(/Ã/g, "Í")
+        .replace(/ÃŠ/g, "Ê")
+        .replace(/Ã”/g, "Ô");
+}
+
+// --- 1. LEITURA E PARSING INTELIGENTE DO CSV COM SUPORTE A EDIÇÕES/EXCLUSÕES ---
 function processarResultadoCSV(results) {
     const linhas = results ? results.data : [];
     const gruposTemp = {};
 
-    let idxDescricao = -1, idxUnidade = -1, idxSituacao = -1, idxQtde = -1;
+    // Carrega registros de exclusão e modificação do Admin
+    const produtosExcluidos = JSON.parse(localStorage.getItem('rqm_produtos_excluidos')) || [];
+    const produtosEditados = JSON.parse(localStorage.getItem('rqm_produtos_editados')) || {};
+
+    let idxDescricao = -1, idxGrupo = -1, idxUnidade = -1, idxSituacao = -1, idxQtde = -1;
     let linhaInicioDados = 0;
 
     if (linhas && linhas.length > 0) {
-        for (let i = 0; i < Math.min(10, linhas.length); i++) {
-            const linhaStr = linhas[i].map(c => String(c).toUpperCase().trim());
+        for (let i = 0; i < Math.min(15, linhas.length); i++) {
+            if (!linhas[i]) continue;
+            const linhaStr = linhas[i].map(c => corrigirTextoCorrompido(c).toUpperCase().trim());
             
             const posDesc = linhaStr.findIndex(c => c.includes("DESCRIÇ") || c.includes("DESCRICAO"));
-            if (posDesc !== -1 && idxDescricao === -1) idxDescricao = posDesc;
+            if (posDesc !== -1) {
+                idxDescricao = posDesc;
+                
+                const posGrupo = linhaStr.findIndex(c => c === "GRUPO" || c.includes("CATEGORIA"));
+                if (posGrupo !== -1) idxGrupo = posGrupo;
 
-            const posUn = linhaStr.findIndex(c => c.includes("UNIDADE") || c === "UN");
-            if (posUn !== -1 && idxUnidade === -1) idxUnidade = posUn;
+                const posUn = linhaStr.findIndex(c => c.includes("UNIDADE") || c === "UN");
+                if (posUn !== -1) idxUnidade = posUn;
 
-            const posSit = linhaStr.findIndex(c => c.includes("SITUAÇ") || c.includes("SITUACAO") || c === "SIT");
-            if (posSit !== -1 && idxSituacao === -1) idxSituacao = posSit;
+                const posSit = linhaStr.findIndex(c => c.includes("SITUAÇ") || c.includes("SITUACAO") || c === "SIT");
+                if (posSit !== -1) idxSituacao = posSit;
 
-            const posQtd = linhaStr.findIndex(c => 
-                c.includes("QTDE ATUAL") || c.includes("ESTOQUE ATUAL") || c === "QTDE" || c === "ESTOQUE" || c === "SALDO"
-            );
-            if (posQtd !== -1 && idxQtde === -1) idxQtde = posQtd;
+                const posQtd = linhaStr.findIndex(c => 
+                    c.includes("QTDE ATUAL") || c.includes("ESTOQUE ATUAL") || c === "QTDE" || c === "ESTOQUE" || c === "SALDO"
+                );
+                if (posQtd !== -1) idxQtde = posQtd;
 
-            if (idxDescricao !== -1 && idxQtde !== -1) {
                 linhaInicioDados = i + 1;
+                break;
             }
         }
 
-        if (idxDescricao === -1) idxDescricao = 2; 
-        if (idxUnidade === -1) idxUnidade = 4;     
-        if (idxSituacao === -1) idxSituacao = 6;   
-        if (idxQtde === -1) idxQtde = 9;           
+        if (idxDescricao === -1) idxDescricao = 2;
+        if (idxGrupo === -1) idxGrupo = 3;
+        if (idxUnidade === -1) idxUnidade = 5;
+        if (idxQtde === -1) idxQtde = 9;
 
         for (let i = linhaInicioDados; i < linhas.length; i++) {
             const linha = linhas[i];
             if (!linha || !linha[idxDescricao]) continue;
 
-            let descricao = String(linha[idxDescricao]).trim();
-            const unidadeRaw = linha[idxUnidade] ? String(linha[idxUnidade]).trim().toUpperCase() : "UN";
-            const situacao = linha[idxSituacao] ? String(linha[idxSituacao]).trim().toUpperCase() : "ATIVO";
+            const idItemCSV = `csv-item-${i}`;
+            let descricao = corrigirTextoCorrompido(linha[idxDescricao]).trim();
+
+            // 🛑 Ignora se o produto foi excluído via Painel Admin
+            if (produtosExcluidos.includes(idItemCSV) || produtosExcluidos.includes(descricao.toUpperCase())) {
+                continue;
+            }
+
+            // ✏️ Aplica edições feitas via Painel Admin se existirem
+            let qtdeEstoque = 0;
+            if (produtosEditados[idItemCSV]) {
+                descricao = produtosEditados[idItemCSV].medida || descricao;
+                qtdeEstoque = parseFloat(produtosEditados[idItemCSV].estoque) || 0;
+            } else {
+                if (idxQtde !== -1 && linha[idxQtde] !== undefined && linha[idxQtde] !== null) {
+                    let strVal = String(linha[idxQtde]).trim().replace(/[^\d.,-]/g, '').replace(',', '.');
+                    const qtdeParsed = parseFloat(strVal);
+                    if (!isNaN(qtdeParsed)) qtdeEstoque = qtdeParsed;
+                }
+            }
+
+            let grupoRaw = (idxGrupo !== -1 && linha[idxGrupo]) ? corrigirTextoCorrompido(linha[idxGrupo]).trim().toUpperCase() : "";
+            const unidadeRaw = (idxUnidade !== -1 && linha[idxUnidade]) ? String(linha[idxUnidade]).trim().toUpperCase() : "UN";
+            const situacao = (idxSituacao !== -1 && linha[idxSituacao]) ? corrigirTextoCorrompido(linha[idxSituacao]).trim().toUpperCase() : "ATIVO";
 
             if (situacao.includes("INAT") || situacao === "I" || situacao.includes("BLOQ") || situacao.includes("CANCEL")) continue;
             if (!descricao || descricao.toUpperCase().includes("DESCRIÇÃO") || descricao.toUpperCase().includes("DESCRICAO")) continue;
-
-            let qtdeEstoque = 0;
-            if (linha[idxQtde] !== undefined && linha[idxQtde] !== null) {
-                let strVal = String(linha[idxQtde]).trim().replace(/[^\d.,-]/g, '').replace(',', '.');
-                const qtdeParsed = parseFloat(strVal);
-                if (!isNaN(qtdeParsed)) qtdeEstoque = qtdeParsed;
-            }
 
             const ehBloqueado = PALAVRAS_BLOQUEADAS.some(p => descricao.toUpperCase().includes(p));
             if (ehBloqueado) continue;
 
             descricao = descricao.replace(/\s*[-\/]\s*OK$/i, '').replace(/\s+OK$/i, '').replace(/\s*[\/-]\s*$/, '').trim();
 
-            let idGrupo = "acessorios";
+            let idGrupo = "ferragens";
+            let nomeGrupoCompleto = "Ferragens e Diversos";
             let nomeCategoria = "Geral";
             const desc = descricao.toUpperCase();
 
-            if (desc.includes("TUBO QUA") || desc.includes("TUBO QUAD") || desc.includes("TUBO RET") || desc.includes("TUBO RED") || desc.includes("TUBO SCH")) {
+            if (grupoRaw.includes("TUBO") || desc.includes("TUBO")) {
                 idGrupo = "tubos";
+                nomeGrupoCompleto = "Tubos Galvanizados e Aço";
                 if (desc.includes("TUBO RED") || desc.includes("TUBO SCH")) nomeCategoria = "Tubos Redondos";
                 else if (desc.includes("TUBO QUA")) nomeCategoria = "Tubos Quadrados";
                 else if (desc.includes("TUBO RET")) nomeCategoria = "Tubos Retangulares";
-            } else if (desc.includes("CANTONEIRA")) {
-                idGrupo = "cantoneiras";
-                nomeCategoria = "Abas Iguais";
-            } else if (desc.includes("FERRO CHATO") || desc.includes("BARRA CHATA")) {
-                idGrupo = "chato";
-                nomeCategoria = "Perfil Padrão";
-            } else if (desc.includes("ROLDANA")) {
+                else nomeCategoria = "Geral";
+            } else if (grupoRaw.includes("KIT") || grupoRaw.includes("BASCULANTE") || desc.includes("KIT BASC")) {
+                idGrupo = "kits-basculante";
+                nomeGrupoCompleto = "Kits Basculante";
+                nomeCategoria = "Kits e Conjuntos";
+            } else if (grupoRaw.includes("PORTA") || desc.includes("PORTA DE ACO") || desc.includes("PUXADOR")) {
+                idGrupo = "portas-aco";
+                nomeGrupoCompleto = "Portas de Aço e Componentes";
+                nomeCategoria = "Acessórios para Portas";
+            } else if (grupoRaw.includes("PERFIL") || grupoRaw.includes("CANTONEIRA") || desc.includes("CANTONEIRA") || desc.includes("FERRO CHATO")) {
+                idGrupo = "perfis-aco";
+                nomeGrupoCompleto = "Perfis em Aço Carbono";
+                nomeCategoria = "Perfis Industriais";
+            } else if (grupoRaw.includes("CHAPA") || grupoRaw.includes("BOBINA") || desc.includes("CHAPA")) {
+                idGrupo = "chapas-bobinas";
+                nomeGrupoCompleto = "Chapas e Bobinas Aço";
+                nomeCategoria = "Chapas de Aço";
+            } else if (grupoRaw.includes("ROLDANA") || grupoRaw.includes("GUIA") || desc.includes("ROLDANA")) {
                 idGrupo = "roldanas";
-                nomeCategoria = "Roldanas";
-            } else if (desc.includes("GONZO")) {
-                idGrupo = "gonzos";
-                nomeCategoria = "Gonzos";
-            } else if (desc.includes("DISCO")) {
-                idGrupo = "discos";
-                nomeCategoria = "Medidas Comuns";
+                nomeGrupoCompleto = "Roldanas e Guias";
+                nomeCategoria = "Roldanas e Rodízios";
+            } else if (grupoRaw.includes("RODAJO") || desc.includes("RODAJO")) {
+                idGrupo = "rodajos";
+                nomeGrupoCompleto = "Rodajos e Trilhos";
+                nomeCategoria = "Rodajos";
+            } else if (grupoRaw.includes("FITA") || desc.includes("FITA")) {
+                idGrupo = "fitas";
+                nomeGrupoCompleto = "Fitas para Porta de Aço";
+                nomeCategoria = "Fitas de Proteção/Guia";
+            } else if (grupoRaw.includes("FERRAGEM") || grupoRaw.includes("DIVERSOS")) {
+                idGrupo = "ferragens";
+                nomeGrupoCompleto = "Ferragens e Diversos";
+                nomeCategoria = "Ferragens";
+            } else if (grupoRaw) {
+                idGrupo = slugify(grupoRaw);
+                nomeGrupoCompleto = grupoRaw;
+                nomeCategoria = "Geral";
             }
 
-            const configGrupo = MAPA_GRUPOS_CONFIG[idGrupo] || MAPA_GRUPOS_CONFIG.acessorios;
+            const configGrupo = MAPA_GRUPOS_CONFIG[idGrupo] || {
+                nome: nomeGrupoCompleto,
+                tipo: "acessorios",
+                imagem: IMAGENS_GRUPOS.padrao,
+                unidade: (unidadeRaw === "BR" || unidadeRaw === "MT") ? "barra(s)" : "unidade(s)",
+                fracao: (unidadeRaw === "BR" || unidadeRaw === "MT")
+            };
 
             if (!gruposTemp[idGrupo]) {
                 gruposTemp[idGrupo] = {
@@ -154,19 +250,22 @@ function processarResultadoCSV(results) {
             }
 
             gruposTemp[idGrupo].categoriasMap[nomeCategoria].itens.push({
-                idItem: `csv-item-${i}`,
+                idItem: idItemCSV,
                 medida: descricao,
                 estoque: qtdeEstoque
             });
         }
     }
 
-    // --- INTEGRAR PRODUTOS MANUAIS CADASTRADOS NO PAINEL ADMIN ---
+    // Unifica produtos adicionados manualmente via Admin
     const manuais = JSON.parse(localStorage.getItem("rqm_produtos_manuais")) || [];
     manuais.forEach((prodManual, index) => {
-        const idGrupo = prodManual.grupo || "acessorios";
+        const idManual = `manual-item-${index}`;
+        if (produtosExcluidos.includes(idManual)) return;
+
+        const idGrupo = prodManual.grupo || "ferragens";
         const nomeCategoria = prodManual.categoria || "Geral";
-        const configGrupo = MAPA_GRUPOS_CONFIG[idGrupo] || MAPA_GRUPOS_CONFIG.acessorios;
+        const configGrupo = MAPA_GRUPOS_CONFIG[idGrupo] || MAPA_GRUPOS_CONFIG.ferragens;
 
         if (!gruposTemp[idGrupo]) {
             gruposTemp[idGrupo] = {
@@ -184,10 +283,13 @@ function processarResultadoCSV(results) {
             gruposTemp[idGrupo].categoriasMap[nomeCategoria] = { nomeCategoria: nomeCategoria, itens: [] };
         }
 
+        const medidaDef = produtosEditados[idManual] ? produtosEditados[idManual].medida : prodManual.medida;
+        const estqDef = produtosEditados[idManual] ? parseFloat(produtosEditados[idManual].estoque) : (prodManual.estoque === 1 ? 10 : 0);
+
         gruposTemp[idGrupo].categoriasMap[nomeCategoria].itens.unshift({
-            idItem: `manual-item-${index}`,
-            medida: prodManual.medida,
-            estoque: prodManual.estoque === 1 ? 10 : 0
+            idItem: idManual,
+            medida: medidaDef,
+            estoque: estqDef
         });
     });
 
@@ -207,7 +309,6 @@ function processarResultadoCSV(results) {
 
 function carregarDadosDoCSV() {
     if (typeof Papa === 'undefined') {
-        console.error("Biblioteca PapaParse não encontrada!");
         processarResultadoCSV(null);
         return;
     }
@@ -218,24 +319,33 @@ function carregarDadosDoCSV() {
         Papa.parse(customCSV, {
             header: false,
             skipEmptyLines: true,
-            complete: processarResultadoCSV,
-            error: function(err) {
-                console.error("Erro ao processar CSV customizado:", err);
-                processarResultadoCSV(null);
-            }
+            complete: processarResultadoCSV
         });
-    } else {
-        Papa.parse("PRODUTOS.CSV", {
+        return;
+    }
+
+    function tentarLerCSV(nomeArquivo, proximaTentativa) {
+        Papa.parse(nomeArquivo, {
             download: true,
             header: false,
+            encoding: "ISO-8859-1",
+            delimitersToGuess: [';', ',', '\t'],
             skipEmptyLines: true,
-            complete: processarResultadoCSV,
-            error: function(err) {
-                console.error("Erro ao ler PRODUTOS.CSV:", err);
-                processarResultadoCSV(null);
+            complete: function(results) {
+                processarResultadoCSV(results);
+            },
+            error: function() {
+                if (proximaTentativa) proximaTentativa();
+                else processarResultadoCSV(null);
             }
         });
     }
+
+    tentarLerCSV("PRODUTOS.CSV", function() {
+        tentarLerCSV("produtos.csv", function() {
+            tentarLerCSV("PRODUTOS_COMPLETO_TODOS_OS_ITENS.csv");
+        });
+    });
 }
 
 // --- 2. GERENCIAMENTO DE TEMA ---
@@ -617,6 +727,7 @@ function closeWishlistModal() {
 
 // --- 7. FILTROS E BUSCA GLOBAL ---
 function normalizeText(text) {
+    if (!text) return "";
     return text.toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "") 
@@ -844,8 +955,29 @@ function registrarAcessoAdmin() {
     localStorage.setItem('rqm_acessos', acessos.toString());
 }
 
-// --- 12. INICIALIZAÇÃO ---
+// --- 12. CONTADOR DE CLIQUES NA LOGO E INICIALIZAÇÃO ---
+let contadorCliquesLogo = 0;
+let timerCliquesLogo = null;
+
+function gerenciarCliqueNaLogo(e) {
+    if (e) e.preventDefault();
+    
+    contadorCliquesLogo++;
+    clearTimeout(timerCliquesLogo);
+
+    if (contadorCliquesLogo >= 5) {
+        contadorCliquesLogo = 0;
+        abrirPainelAdmin();
+    } else {
+        timerCliquesLogo = setTimeout(() => {
+            contadorCliquesLogo = 0;
+        }, 2500);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    if (typeof verificarAvisosEManutencao === 'function' && verificarAvisosEManutencao()) return;
+
     initTheme();
     carregarCarrinhoSalvo();
     carregarDadosDoCSV();
@@ -871,12 +1003,118 @@ document.addEventListener("DOMContentLoaded", () => {
     if (form) {
         form.addEventListener('submit', window.enviarOrcamentoWhatsApp);
     }
+
+    const logoImg = document.querySelector('.site-logo');
+    const logoContainer = document.querySelector('.logo-container a');
+
+    if (logoImg) {
+        logoImg.addEventListener('click', gerenciarCliqueNaLogo);
+    }
+    if (logoContainer) {
+        logoContainer.addEventListener('click', gerenciarCliqueNaLogo);
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('admin') === '1') {
+        abrirPainelAdmin();
+    }
 });
 
-// --- 13. ATALHO SECRETO PARA O ADMIN (Ctrl + Shift + A) ---
+// --- 13. ATALHO SECRETO VIA TECLADO (Ctrl + Shift + A) ---
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'A') {
         e.preventDefault();
-        window.location.href = './gerenciador-interno-rqm.html';
+        abrirPainelAdmin();
+    }
+});
+
+// --- 14. VERIFICAÇÃO DE BANNER DE AVISO E MODO MANUTENÇÃO ---
+function verificarAvisosEManutencao() {
+    const bannerTexto = localStorage.getItem('rqm_banner_aviso');
+    const modoManutencao = localStorage.getItem('rqm_modo_manutencao') === 'true';
+
+    // 1. Aplica ou remove o Banner de Aviso no topo
+    let bannerEl = document.getElementById('rqm-banner-aviso-topo');
+    if (bannerTexto && bannerTexto.trim() !== '') {
+        if (!bannerEl) {
+            bannerEl = document.createElement('div');
+            bannerEl.id = 'rqm-banner-aviso-topo';
+            bannerEl.style.cssText = `
+                background-color: #f59e0b;
+                color: #000;
+                font-weight: bold;
+                text-align: center;
+                padding: 10px 15px;
+                font-size: 0.95rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                position: relative;
+                z-index: 10000;
+            `;
+            if (document.body) {
+                document.body.insertBefore(bannerEl, document.body.firstChild);
+            }
+        }
+        if (bannerEl) {
+            bannerEl.innerHTML = `<i class="fa-solid fa-bullhorn"></i> <span>${bannerTexto}</span>`;
+        }
+    } else if (bannerEl) {
+        bannerEl.remove();
+    }
+
+    // 2. Aplica ou remove a tela de Modo Manutenção
+    let manutencaoEl = document.getElementById('rqm-tela-manutencao');
+    if (modoManutencao) {
+        if (!manutencaoEl) {
+            manutencaoEl = document.createElement('div');
+            manutencaoEl.id = 'rqm-tela-manutencao';
+            manutencaoEl.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                background-color: #0f172a; color: #fff; display: flex;
+                flex-direction: column; align-items: center; justify-content: center;
+                text-align: center; padding: 20px; z-index: 9999;
+            `;
+            manutencaoEl.innerHTML = `
+                <i class="fa-solid fa-wrench" style="font-size: 3.5rem; color: #f59e0b; margin-bottom: 20px;"></i>
+                <h1 style="font-size: 2rem; margin-bottom: 10px;">Sistema em Manutenção</h1>
+                <p style="color: #94a3b8; max-width: 500px;">
+                    Estamos realizando atualizações em nosso catálogo. Por favor, tente novamente em alguns minutos.
+                </p>
+            `;
+            if (document.body) {
+                document.body.appendChild(manutencaoEl);
+            }
+        }
+    } else if (manutencaoEl) {
+        manutencaoEl.remove();
+    }
+
+    return modoManutencao;
+}
+
+// --- 15. SINCRONIZAÇÃO EM TEMPO REAL COM O PAINEL ADMIN ---
+window.addEventListener('storage', (e) => {
+    const chavesAdmin = [
+        'rqm_produtos_editados', 
+        'rqm_produtos_excluidos', 
+        'rqm_produtos_manuais', 
+        'rqm_palavras_bloqueadas',
+        'rqm_custom_csv',
+        'rqm_banner_aviso',
+        'rqm_modo_manutencao'
+    ];
+    
+    if (chavesAdmin.includes(e.key)) {
+        if (e.key === 'rqm_banner_aviso' || e.key === 'rqm_modo_manutencao') {
+            verificarAvisosEManutencao();
+            return;
+        }
+
+        if (typeof carregarDadosDoCSV === 'function') {
+            carregarDadosDoCSV();
+        }
     }
 });
